@@ -153,7 +153,7 @@ namespace OBeautifulCode.Equality.Recipes
         /// <summary>
         /// Compares two dictionaries for equality.
         /// </summary>
-        /// <typeparam name="TSource">The type of the elements of the input sequences.</typeparam>
+        /// <typeparam name="TElement">The type of the elements of the input sequences.</typeparam>
         /// <param name="item1">An <see cref="IEnumerable{T}"/> to compare to <paramref name="item2"/>.</param>
         /// <param name="item2">An <see cref="IEnumerable{T}"/> to compare to the first sequence.</param>
         /// <param name="elementComparer">Optional equality comparer to use to compare the elements.  Default is to call <see cref="GetEqualityComparerToUse{T}(IEqualityComparer{T})"/>.</param>
@@ -163,10 +163,10 @@ namespace OBeautifulCode.Equality.Recipes
         /// - true if the two sequences are of equal length and their corresponding elements are equal according to <paramref name="elementComparer"/>.
         /// - otherwise, false.
         /// </returns>
-        public static bool IsSequenceEqualTo<TSource>(
-            this IEnumerable<TSource> item1,
-            IEnumerable<TSource> item2,
-            IEqualityComparer<TSource> elementComparer = null)
+        public static bool IsSequenceEqualTo<TElement>(
+            this IEnumerable<TElement> item1,
+            IEnumerable<TElement> item2,
+            IEqualityComparer<TElement> elementComparer = null)
         {
             if (ReferenceEquals(item1, item2))
             {
@@ -189,7 +189,7 @@ namespace OBeautifulCode.Equality.Recipes
         /// Determines if two enumerables have the exact same elements in any order.
         /// Every unique element in the first set has to appear in the second set the same number of times it appears in the first.
         /// </summary>
-        /// <typeparam name="TSource">The type of the elements of the input sequences.</typeparam>
+        /// <typeparam name="TElement">The type of the elements of the input sequences.</typeparam>
         /// <param name="item1">An <see cref="IEnumerable{T}"/> to compare to <paramref name="item2"/>.</param>
         /// <param name="item2">An <see cref="IEnumerable{T}"/> to compare to the first sequence.</param>
         /// <param name="elementComparer">Optional equality comparer to use to compare the elements.  Default is to call <see cref="GetEqualityComparerToUse{T}(IEqualityComparer{T})"/>.</param>
@@ -201,10 +201,10 @@ namespace OBeautifulCode.Equality.Recipes
         /// - otherwise, false.
         /// </returns>
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "This is not excessively complex.")]
-        public static bool IsUnorderedEqualTo<TSource>(
-            this IEnumerable<TSource> item1,
-            IEnumerable<TSource> item2,
-            IEqualityComparer<TSource> elementComparer = null)
+        public static bool IsUnorderedEqualTo<TElement>(
+            this IEnumerable<TElement> item1,
+            IEnumerable<TElement> item2,
+            IEqualityComparer<TElement> elementComparer = null)
         {
             if (ReferenceEquals(item1, item2))
             {
@@ -293,7 +293,7 @@ namespace OBeautifulCode.Equality.Recipes
 
                 var constructorInfo = typeof(EnumerableEqualityComparer<>).MakeGenericType(genericArguments[0]).GetConstructor(new[] { typeof(EnumerableEqualityComparerStrategy) });
 
-                var enumerableEqualityComparerStrategy = type.IsSystemOrderedEnumerableType() ? EnumerableEqualityComparerStrategy.SequenceEqual : EnumerableEqualityComparerStrategy.UnorderedEqual;
+                var enumerableEqualityComparerStrategy = type.IsSystemOrderedCollectionType() ? EnumerableEqualityComparerStrategy.SequenceEqual : EnumerableEqualityComparerStrategy.UnorderedEqual;
 
                 // ReSharper disable once PossibleNullReferenceException
                 result = (IEqualityComparer<T>)constructorInfo.Invoke(new object[] { enumerableEqualityComparerStrategy });

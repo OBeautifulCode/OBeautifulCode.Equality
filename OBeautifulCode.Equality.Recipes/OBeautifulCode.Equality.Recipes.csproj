@@ -51,6 +51,7 @@
     <Compile Include="EqualityComparers\EnumerableEqualityComparer.cs" />
     <Compile Include="EqualityComparers\EnumerableEqualityComparerStrategy.cs" />
     <Compile Include="EqualityComparers\ReadOnlyDictionaryEqualityComparer.cs" />
+    <Compile Include="HashCodeHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

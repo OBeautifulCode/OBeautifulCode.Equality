@@ -6,11 +6,12 @@
     <tags>equality comparer iequalitycomparer</tags>
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.Equality/master/OBeautifulCode.Equality.Recipes/nuget-icon.png</iconUrl>
     <dependencies>
-      <dependency id="OBeautifulCode.Type.Recipes.TypeExtensions" version="1.0.17" />
+      <dependency id="OBeautifulCode.Type.Recipes.TypeExtensions" version="1.0.19" />
     </dependencies>
   </metadata>
   <files>
     <file src="EqualityExtensions.cs" target="content\net462\.recipes\OBeautifulCode.Equality\EqualityExtensions.cs" />
+    <file src="HashCodeHelper.cs" target="content\net462\.recipes\OBeautifulCode.Equality\HashCodeHelper.cs" />
     <file src="EqualityComparers\EnumerableEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\EnumerableEqualityComparer.cs" />
     <file src="EqualityComparers\EnumerableEqualityComparerStrategy.cs" target="content\net462\.recipes\OBeautifulCode.Equality\EnumerableEqualityComparerStrategy.cs" />
     <file src="EqualityComparers\DictionaryEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\DictionaryEqualityComparer.cs" />
