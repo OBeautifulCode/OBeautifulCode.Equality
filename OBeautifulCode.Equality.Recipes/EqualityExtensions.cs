@@ -231,6 +231,8 @@ namespace OBeautifulCode.Equality.Recipes
 
             foreach (var item1Element in item1AsList)
             {
+                var elementFound = false;
+
                 for (var x = 0; x < item2AsList.Count; x++)
                 {
                     var item2Element = item2AsList[x];
@@ -239,11 +241,16 @@ namespace OBeautifulCode.Equality.Recipes
                     {
                         item2AsList.RemoveAt(x);
 
+                        elementFound = true;
+
                         break;
                     }
                 }
 
-                return false;
+                if (!elementFound)
+                {
+                    return false;
+                }
             }
 
             return true;
