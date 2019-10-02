@@ -71,16 +71,12 @@ namespace OBeautifulCode.Equality.Recipes
         public int GetHashCode(
             IEnumerable<T> obj)
         {
-            // The result would vary based on EnumerableEqualityComparerStrategy
-            // and in some cases would require the elements to be sortable (implement IComparable)
-            // It's highly unlikely that a Dictionary will be constructed with an instance of
-            // this EqualityComparer.
-            // However, this comparer IS used internally, by some of the 
-            // equality methods in EnumerableExtensions.  As such, we always return 0, which guarantees
-            // that two objects that are equal return the same hash code (the contract is perfectly ok
-            // if the same hash code is returned for two objects that are NOT equal).
+            // It's highly unlikely that a Dictionary (or some other data structure that relies on
+            // hashing) will be constructed with an instance of this EqualityComparer.
+            // This method is NOT used by internally by EqualityExtensions.
+            // If needed in the future, we can use HashCodeHelper.
             // see: https://stackoverflow.com/questions/4095395/whats-the-role-of-gethashcode-in-the-iequalitycomparert-in-net
-            return 0;
+            throw new NotSupportedException();
         }
     }
 }
