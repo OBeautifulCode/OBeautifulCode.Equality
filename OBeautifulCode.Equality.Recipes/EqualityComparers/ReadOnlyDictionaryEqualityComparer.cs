@@ -11,6 +11,9 @@ namespace OBeautifulCode.Equality.Recipes
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+
+    using OBeautifulCode.Build.Analyzers;
 
     /// <summary>
     /// An implementation of <see cref="IEqualityComparer{T}"/> for any <see cref="IReadOnlyDictionary{TKey, TValue}"/>.
@@ -37,6 +40,7 @@ namespace OBeautifulCode.Equality.Recipes
         }
 
         /// <inheritdoc />
+        [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = SuppressBecause.CA1065_DoNotRaiseExceptionsInUnexpectedLocations_ThrowNotImplementedExceptionForCodePathThatWillNeverBeCalled)]
         public int GetHashCode(
             IReadOnlyDictionary<TKey, TValue> obj)
         {
