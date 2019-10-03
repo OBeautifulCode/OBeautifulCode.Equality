@@ -82,6 +82,7 @@
     <Compile Include=".recipes\OBeautifulCode.AutoFakeItEasy\AutoFakeItEasyBootstrapper.cs" />
     <Compile Include="EqualityExtensionsTest.cs" />
     <Compile Include="EqualityComparers\EnumerableEqualityComparerTest.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="HashCodeHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

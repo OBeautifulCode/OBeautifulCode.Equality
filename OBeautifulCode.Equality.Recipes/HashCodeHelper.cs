@@ -58,7 +58,7 @@ namespace OBeautifulCode.Equality.Recipes
         private static readonly IComparer<object> ObjectComparer = Comparer<object>.Default;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HashCodeHelper"/> struct.
+        /// Initializes a new instance of the <see cref="HashCodeHelper"/> class.
         /// </summary>
         /// <param name="value">The hash code value.</param>
         public HashCodeHelper(
@@ -86,12 +86,13 @@ namespace OBeautifulCode.Equality.Recipes
         public static HashCodeHelper Initialize(int seedValue) => new HashCodeHelper(seedValue);
 
         /// <summary>
-        /// Adds the hash value for the given value to the current hash and returns the new value.
+        /// Adds the hash code for the given item to the current hash code and returns the new hash code.
         /// </summary>
-        /// <param name="value">The value to hash.</param>
+        /// <typeparam name="T">The type of the item being hashed.</typeparam>
+        /// <param name="item">The item to hash.</param>
         /// <returns>The new hash code.</returns>
         public HashCodeHelper Hash<T>(
-            T value)
+            T item)
         {
             unchecked
             {
@@ -107,7 +108,7 @@ namespace OBeautifulCode.Equality.Recipes
                         ? HashDictionaryMethodInfo
                         : HashReadOnlyDictionaryMethodInfo;
 
-                    result = (HashCodeHelper)methodInfo.MakeGenericMethod(genericArguments).Invoke(this, new[] { (object)value });
+                    result = (HashCodeHelper)methodInfo.MakeGenericMethod(genericArguments).Invoke(this, new[] { (object)item });
                 }
                 else if (valueType.IsSystemCollectionType())
                 {
@@ -115,22 +116,22 @@ namespace OBeautifulCode.Equality.Recipes
 
                     if (valueType.IsSystemOrderedCollectionType())
                     {
-                        result = (HashCodeHelper)HashOrderedCollectionMethodInfo.MakeGenericMethod(genericArguments).Invoke(this, new[] { (object)value });
+                        result = (HashCodeHelper)HashOrderedCollectionMethodInfo.MakeGenericMethod(genericArguments).Invoke(this, new[] { (object)item });
                     }
                     else
                     {
-                        result = (HashCodeHelper)HashUnorderedCollectionMethodInfo.MakeGenericMethod(genericArguments).Invoke(this, new[] { (object)value });
+                        result = (HashCodeHelper)HashUnorderedCollectionMethodInfo.MakeGenericMethod(genericArguments).Invoke(this, new[] { (object)item });
                     }
                 }
                 else if (valueType.IsArray)
                 {
                     var genericArguments = valueType.GetElementType();
 
-                    result = (HashCodeHelper)HashOrderedCollectionMethodInfo.MakeGenericMethod(genericArguments).Invoke(this, new[] { (object)value });
+                    result = (HashCodeHelper)HashOrderedCollectionMethodInfo.MakeGenericMethod(genericArguments).Invoke(this, new[] { (object)item });
                 }
                 else
                 {
-                    var hashCode = (this.Value * HashCodeMultiplier) + (value?.GetHashCode() ?? 0);
+                    var hashCode = (this.Value * HashCodeMultiplier) + (item?.GetHashCode() ?? 0);
 
                     result = new HashCodeHelper(hashCode);
                 }
@@ -278,6 +279,7 @@ namespace OBeautifulCode.Equality.Recipes
                 var comparer = Comparer<TElement>.Default;
 
                 // Is there a comparer for the element type?
+                // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
                 if (comparer.Equals(ObjectComparer))
                 {
                     // There is no comparer and thus we cannot sort the elements.

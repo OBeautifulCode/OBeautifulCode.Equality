@@ -76,7 +76,7 @@ namespace OBeautifulCode.Equality.Recipes
             // This method is NOT used by internally by EqualityExtensions.
             // If needed in the future, we can use HashCodeHelper.
             // see: https://stackoverflow.com/questions/4095395/whats-the-role-of-gethashcode-in-the-iequalitycomparert-in-net
-            throw new NotSupportedException();
+            throw new NotImplementedException();
         }
     }
 }

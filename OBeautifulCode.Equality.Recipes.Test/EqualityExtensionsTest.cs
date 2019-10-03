@@ -464,7 +464,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsEqualTo___Should_return_false___When_multi_level_data_structures_are_not_equal()
+        public static void IsEqualTo___Should_return_false___When_multiple_level_data_structures_are_not_equal()
         {
             // Arrange
             IReadOnlyDictionary<string, IReadOnlyList<IReadOnlyCollection<string>>> item1a = new Dictionary<string, IReadOnlyList<IReadOnlyCollection<string>>>
@@ -540,7 +540,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsEqualTo___Should_return_true___When_multi_level_data_structures_are_equal()
+        public static void IsEqualTo___Should_return_true___When_multiple_level_data_structures_are_equal()
         {
             // Arrange
             IReadOnlyDictionary<string, IReadOnlyList<IReadOnlyCollection<string>>> item1a = new Dictionary<string, IReadOnlyList<IReadOnlyCollection<string>>>
