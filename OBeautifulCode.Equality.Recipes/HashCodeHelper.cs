@@ -55,8 +55,6 @@ namespace OBeautifulCode.Equality.Recipes
 
         private static readonly MethodInfo HashUnorderedCollectionMethodInfo = typeof(HashCodeHelper).GetMethod(nameof(HashUnorderedCollection), BindingFlags.NonPublic | BindingFlags.Instance);
 
-        private static readonly IComparer<object> ObjectComparer = Comparer<object>.Default;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="HashCodeHelper"/> class.
         /// </summary>
@@ -157,12 +155,10 @@ namespace OBeautifulCode.Equality.Recipes
             }
             else
             {
-                result = result.HashUnorderedCollection(dictionary.Keys);
-
                 var keyComparer = Comparer<TKey>.Default;
 
                 // Is there a comparer for the keys?
-                if (keyComparer.Equals(ObjectComparer))
+                if (IsObjectComparer(keyComparer))
                 {
                     // There is no comparer for the keys and thus we cannot sort the key/value pairs.
                     // The best we can do is hash the count, which will ensure
@@ -208,7 +204,7 @@ namespace OBeautifulCode.Equality.Recipes
                 var keyComparer = Comparer<TKey>.Default;
 
                 // Is there a comparer for the keys?
-                if (keyComparer.Equals(ObjectComparer))
+                if (IsObjectComparer(keyComparer))
                 {
                     // There is no comparer for the keys and thus we cannot sort the key/value pairs.
                     // The best we can do is hash the count, which will ensure
@@ -280,7 +276,7 @@ namespace OBeautifulCode.Equality.Recipes
 
                 // Is there a comparer for the element type?
                 // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-                if (comparer.Equals(ObjectComparer))
+                if (IsObjectComparer(comparer))
                 {
                     // There is no comparer and thus we cannot sort the elements.
                     // The best we can do is hash the element count, which will ensure
@@ -297,6 +293,16 @@ namespace OBeautifulCode.Equality.Recipes
                     result = result.HashOrderedCollection(collection.OrderBy(_ => _, comparer));
                 }
             }
+
+            return result;
+        }
+
+        private static bool IsObjectComparer<T>(
+            IComparer<T> comparer)
+        {
+            var typeFullName = comparer.GetType().FullName;
+
+            var result = typeFullName != null && typeFullName.StartsWith("System.Collections.Generic.ObjectComparer");
 
             return result;
         }
