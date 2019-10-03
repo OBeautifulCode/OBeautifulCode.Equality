@@ -18,5 +18,6 @@
 
 	<!-- terms to add to dictionary go here -->
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=enumerables/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Noda/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=suppressions/@EntryIndexedValue">True</s:Boolean>
 </wpf:ResourceDictionary>

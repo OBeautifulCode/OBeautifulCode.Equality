@@ -9,6 +9,7 @@
 
 namespace OBeautifulCode.Equality.Recipes
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -302,7 +303,7 @@ namespace OBeautifulCode.Equality.Recipes
         {
             var typeFullName = comparer.GetType().FullName;
 
-            var result = typeFullName != null && typeFullName.StartsWith("System.Collections.Generic.ObjectComparer");
+            var result = typeFullName != null && typeFullName.StartsWith("System.Collections.Generic.ObjectComparer", StringComparison.Ordinal);
 
             return result;
         }
