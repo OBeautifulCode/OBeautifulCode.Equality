@@ -11,6 +11,7 @@
   </metadata>
   <files>
     <file src=".analyzers\SuppressBecause.cs" target="content\net462\.recipes\OBeautifulCode.Equality\SuppressBecause.cs" />
+    <file src="EqualityComparerHelper.cs" target="content\net462\.recipes\OBeautifulCode.Equality\EqualityComparerHelper.cs" />
     <file src="EqualityExtensions.cs" target="content\net462\.recipes\OBeautifulCode.Equality\EqualityExtensions.cs" />
     <file src="HashCodeHelper.cs" target="content\net462\.recipes\OBeautifulCode.Equality\HashCodeHelper.cs" />
     <file src="EqualityComparers\EnumerableEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\EnumerableEqualityComparer.cs" />
