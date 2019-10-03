@@ -29,6 +29,39 @@ namespace OBeautifulCode.Equality.Recipes
     static class EqualityExtensions
     {
         /// <summary>
+        /// Compares objects for equality.
+        /// </summary>
+        /// <typeparam name="T">The type of objects to compare.</typeparam>
+        /// <param name="item1">The first object to compare.</param>
+        /// <param name="item2">The second object to compare.</param>
+        /// <param name="comparer">Optional equality comparer to use to compare the objects.  Default is to call <see cref="GetEqualityComparerToUse{T}(IEqualityComparer{T})"/>.</param>
+        /// <returns>
+        /// - true if the two objects are equal
+        /// - otherwise, false.
+        /// </returns>
+        public static bool IsEqualTo<T>(
+            this T item1,
+            T item2,
+            IEqualityComparer<T> comparer = null)
+        {
+            if (ReferenceEquals(item1, item2))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(item1, null) || ReferenceEquals(item2, null))
+            {
+                return false;
+            }
+
+            var equalityComparerToUse = GetEqualityComparerToUse(comparer);
+
+            var result = equalityComparerToUse.Equals(item1, item2);
+
+            return result;
+        }
+
+        /// <summary>
         /// Compares two dictionaries for equality.
         /// </summary>
         /// <typeparam name="TKey">The type of keys in the dictionaries.</typeparam>

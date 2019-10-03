@@ -20,6 +20,601 @@ namespace OBeautifulCode.Equality.Recipes.Test
     public static class EqualityExtensionsTest
     {
         [Fact]
+        public static void IsEqualTo___Should_return_true___When_both_items_are_null()
+        {
+            // Arrange
+            object item1 = null;
+            object item2 = null;
+
+            // Act
+            var actual = EqualityExtensions.IsEqualTo(item1, item2);
+
+            // Assert
+            actual.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_false___When_one_but_not_both_items_are_null()
+        {
+            // Arrange
+            var item = new object();
+
+            // Act
+            var actual1 = EqualityExtensions.IsEqualTo(item, null);
+            var actual2 = EqualityExtensions.IsEqualTo(null, item);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_objects_are_the_same_reference()
+        {
+            // Arrange
+            var item1a = new object();
+            var item1b = item1a;
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+
+            // Assert
+            actual1.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_false___When_objects_are_not_equal()
+        {
+            // Arrange
+            var item1a = new object();
+            var item1b = new object();
+
+            var item2a = "asdf";
+            var item2b = "ASDF";
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+            var actual2 = item2a.IsEqualTo(item2b);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_objects_are_equal()
+        {
+            // Arrange
+            var item1a = 5;
+            var item1b = 5;
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+
+            // Assert
+            actual1.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_objects_are_equal_using_specified_comparer()
+        {
+            // Arrange
+            var item1a = "asdf";
+            var item1b = "ASDF";
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b, StringComparer.OrdinalIgnoreCase);
+
+            // Assert
+            actual1.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_false___When_objects_are_dictionaries_that_are_not_equal()
+        {
+            IDictionary<string, string> item1a = new Dictionary<string, string>();
+
+            IDictionary<string, string> item1b = new Dictionary<string, string>
+            {
+                { "abc", "abc" },
+            };
+
+            IDictionary<string, string> item2a = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "ghi", "jkl" },
+                { "mno", "pqr" },
+            };
+
+            IDictionary<string, string> item2b = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "aaa", "jkl" },
+                { "mno", "pqr" },
+            };
+
+            IDictionary<string, string> item3a = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "ghi", "jkl" },
+                { "mno", "pqr" },
+            };
+
+            IDictionary<string, string> item3b = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "mno", "pqr" },
+            };
+
+            IDictionary<string, string> item4a = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "ghi", "jkl" },
+                { "mno", "pqr" },
+            };
+
+            IDictionary<string, string> item4b = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "ghi", "aaa" },
+                { "mno", "pqr" },
+            };
+
+            IDictionary<string, string> item5a = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "ghi", "jkl" },
+                { "mno", "pqr" },
+            };
+
+            IDictionary<string, string> item5b = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "GHI", "jkl" },
+                { "mno", "pqr" },
+            };
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+            var actual2 = item2a.IsEqualTo(item2b);
+            var actual3 = item3a.IsEqualTo(item3b);
+            var actual4 = item4a.IsEqualTo(item4b);
+            var actual5 = item5a.IsEqualTo(item5b);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+            actual3.Should().BeFalse();
+            actual4.Should().BeFalse();
+            actual5.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_dictionaries_are_equal()
+        {
+            // Arrange
+            IDictionary<string, string> item1a = new Dictionary<string, string>();
+            IDictionary<string, string> item1b = new Dictionary<string, string>();
+
+            IDictionary<string, string> item2a = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "ghi", "jkl" },
+                { "mno", "pqr" },
+            };
+
+            IDictionary<string, string> item2b = new Dictionary<string, string>
+            {
+                { "mno", "pqr" },
+                { "ghi", "jkl" },
+                { "abc", "def" },
+            };
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+            var actual2 = item2a.IsEqualTo(item2b);
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_false___When_objects_are_read_only_dictionaries_that_are_not_equal()
+        {
+            IReadOnlyDictionary<string, string> item1a = new Dictionary<string, string>();
+
+            IReadOnlyDictionary<string, string> item1b = new Dictionary<string, string>
+            {
+                { "abc", "abc" },
+            };
+
+            IReadOnlyDictionary<string, string> item2a = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "ghi", "jkl" },
+                { "mno", "pqr" },
+            };
+
+            IReadOnlyDictionary<string, string> item2b = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "aaa", "jkl" },
+                { "mno", "pqr" },
+            };
+
+            IReadOnlyDictionary<string, string> item3a = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "ghi", "jkl" },
+                { "mno", "pqr" },
+            };
+
+            IReadOnlyDictionary<string, string> item3b = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "mno", "pqr" },
+            };
+
+            IReadOnlyDictionary<string, string> item4a = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "ghi", "jkl" },
+                { "mno", "pqr" },
+            };
+
+            IReadOnlyDictionary<string, string> item4b = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "ghi", "aaa" },
+                { "mno", "pqr" },
+            };
+
+            IReadOnlyDictionary<string, string> item5a = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "ghi", "jkl" },
+                { "mno", "pqr" },
+            };
+
+            IReadOnlyDictionary<string, string> item5b = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "GHI", "jkl" },
+                { "mno", "pqr" },
+            };
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+            var actual2 = item2a.IsEqualTo(item2b);
+            var actual3 = item3a.IsEqualTo(item3b);
+            var actual4 = item4a.IsEqualTo(item4b);
+            var actual5 = item5a.IsEqualTo(item5b);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+            actual3.Should().BeFalse();
+            actual4.Should().BeFalse();
+            actual5.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_read_only_dictionaries_are_equal()
+        {
+            // Arrange
+            IReadOnlyDictionary<string, string> item1a = new Dictionary<string, string>();
+            IReadOnlyDictionary<string, string> item1b = new Dictionary<string, string>();
+
+            IReadOnlyDictionary<string, string> item2a = new Dictionary<string, string>
+            {
+                { "abc", "def" },
+                { "ghi", "jkl" },
+                { "mno", "pqr" },
+            };
+
+            IReadOnlyDictionary<string, string> item2b = new Dictionary<string, string>
+            {
+                { "mno", "pqr" },
+                { "ghi", "jkl" },
+                { "abc", "def" },
+            };
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+            var actual2 = item2a.IsEqualTo(item2b);
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_false___When_arrays_are_not_equal()
+        {
+            // Arrange
+            var item1a = new[] { "abc", "def" };
+            var item1b = new[] { "abc", "def", "ghi" };
+
+            var item2a = new[] { "abc", "def", "ghi" };
+            var item2b = new[] { "abc", "def" };
+
+            var item3a = new[] { "abc", "def" };
+            var item3b = new[] { "aBc", "dEf" };
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+            var actual2 = item2a.IsEqualTo(item2b);
+            var actual3 = item3a.IsEqualTo(item3b);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+            actual3.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_arrays_are_equal()
+        {
+            // Arrange
+            var item1a = new[] { "abc", null, "def" };
+            var item1b = new[] { "abc", null, "def" };
+
+            var item2a = new string[0];
+            var item2b = new string[0];
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+            var actual2 = item2a.IsEqualTo(item2b);
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_false___When_ordered_collections_are_not_equal()
+        {
+            // Arrange
+            var item1a = new List<string> { "abc", "def" };
+            var item1b = new List<string> { "abc", "def", "ghi" };
+
+            IReadOnlyList<string> item2a = new List<string> { "abc", "def", "ghi" };
+            IReadOnlyList<string> item2b = new List<string> { "abc", "def" };
+
+            IList<string> item3a = new List<string> { "abc", "def" };
+            IList<string> item3b = new List<string> { "aBc", "dEf" };
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+            var actual2 = item2a.IsEqualTo(item2b);
+            var actual3 = item3a.IsEqualTo(item3b);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+            actual3.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_ordered_collections_are_equal()
+        {
+            // Arrange
+            var item1a = new List<string> { "abc", null, "def" };
+            var item1b = new List<string> { "abc", null, "def" };
+
+            IReadOnlyList<string> item2a = new string[0];
+            IReadOnlyList<string> item2b = new string[0];
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+            var actual2 = item2a.IsEqualTo(item2b);
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_false___When_unordered_collections_are_not_equal()
+        {
+            // Arrange
+            IReadOnlyCollection<string> item1a = new List<string> { "abc", "def" };
+            IReadOnlyCollection<string> item1b = new List<string> { "abc", "def", "ghi" };
+
+            ICollection<string> item2a = new List<string> { "abc", "def", "ghi" };
+            ICollection<string> item2b = new List<string> { "abc", "def", null };
+
+            ICollection<string> item3a = new List<string> { "abc", "def" };
+            ICollection<string> item3b = new List<string> { "aBc", "dEf" };
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+            var actual2 = item2a.IsEqualTo(item2b);
+            var actual3 = item3a.IsEqualTo(item3b);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+            actual3.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_unordered_collections_are_equal()
+        {
+            // Arrange
+            ICollection<string> item1a = new List<string> { "abc", null, "def" };
+            ICollection<string> item1b = new List<string> { "abc", null, "def" };
+
+            IReadOnlyCollection<string> item2a = new string[0];
+            IReadOnlyCollection<string> item2b = new string[0];
+
+            ICollection<string> item3a = new List<string> { "abc", null, "def" };
+            ICollection<string> item3b = new List<string> { "def", "abc", null };
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+            var actual2 = item2a.IsEqualTo(item2b);
+            var actual3 = item3a.IsEqualTo(item3b);
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
+            actual3.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_false___When_multi_level_data_structures_are_not_equal()
+        {
+            // Arrange
+            IReadOnlyDictionary<string, IReadOnlyList<IReadOnlyCollection<string>>> item1a = new Dictionary<string, IReadOnlyList<IReadOnlyCollection<string>>>
+            {
+                {
+                    "abc",
+                    new IReadOnlyCollection<string>[]
+                    {
+                        new List<string> { "1", "2", null, "3" },
+                        null,
+                        new List<string> { null, null, "4", "5" },
+                    }
+                },
+                {
+                    "def",
+                    null
+                },
+                {
+                    "ghi",
+                    new List<IReadOnlyCollection<string>>
+                    {
+                        new List<string> { "6", "7" },
+                        new List<string> { "8", "9" },
+                        null,
+                    }
+                },
+                {
+                    "jkl",
+                    new List<IReadOnlyCollection<string>>
+                    {
+                    }
+                },
+            };
+
+            IReadOnlyDictionary<string, IReadOnlyList<IReadOnlyCollection<string>>> item1b = new Dictionary<string, IReadOnlyList<IReadOnlyCollection<string>>>
+            {
+                {
+                    "abc",
+                    new IReadOnlyCollection<string>[]
+                    {
+                        new List<string> { "1", "2", null, "3" },
+                        null,
+                        new List<string> { null, null, "4", "5" },
+                    }
+                },
+                {
+                    "def",
+                    null
+                },
+                {
+                    "ghi",
+                    new List<IReadOnlyCollection<string>>
+                    {
+                        new List<string> { "6", "7" },
+                        new List<string> { "8", "9" },
+                        null,
+                    }
+                },
+                {
+                    "jkl",
+                    new List<IReadOnlyCollection<string>>
+                    {
+                        null,
+                    }
+                },
+            };
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+
+            // Assert
+            actual1.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_multi_level_data_structures_are_equal()
+        {
+            // Arrange
+            IReadOnlyDictionary<string, IReadOnlyList<IReadOnlyCollection<string>>> item1a = new Dictionary<string, IReadOnlyList<IReadOnlyCollection<string>>>
+            {
+                {
+                    "abc",
+                    new IReadOnlyCollection<string>[]
+                    {
+                        new List<string> { "1", "2", null, "3" },
+                        null,
+                        new List<string> { null, null, "4", "5" },
+                    }
+                },
+                {
+                    "def",
+                    null
+                },
+                {
+                    "ghi",
+                    new List<IReadOnlyCollection<string>>
+                    {
+                        new List<string> { "6", "7" },
+                        new List<string> { "8", "9" },
+                        null,
+                    }
+                },
+                {
+                    "jkl",
+                    new List<IReadOnlyCollection<string>>
+                    {
+                    }
+                },
+            };
+
+            IReadOnlyDictionary<string, IReadOnlyList<IReadOnlyCollection<string>>> item1b = new Dictionary<string, IReadOnlyList<IReadOnlyCollection<string>>>
+            {
+                {
+                    "jkl",
+                    new List<IReadOnlyCollection<string>>
+                    {
+                    }
+                },
+                {
+                    "def",
+                    null
+                },
+                {
+                    "abc",
+                    new IReadOnlyCollection<string>[]
+                    {
+                        new List<string> { "1", "3", "2", null, },
+                        null,
+                        new List<string> { "4", null, null, "5" },
+                    }
+                },
+                {
+                    "ghi",
+                    new List<IReadOnlyCollection<string>>
+                    {
+                        new List<string> { "7", "6" },
+                        new List<string> { "9", "8" },
+                        null,
+                    }
+                },
+            };
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+
+            // Assert
+            actual1.Should().BeTrue();
+        }
+
+        [Fact]
         public static void IsDictionaryEqualTo___Should_return_true___When_both_dictionaries_are_null()
         {
             // Arrange
@@ -34,7 +629,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsDictionaryEqualTo___Should_return_true___When_one_but_not_both_dictionaries_are_null()
+        public static void IsDictionaryEqualTo___Should_return_false___When_one_but_not_both_dictionaries_are_null()
         {
             // Arrange
             var notNullDictionary = A.Dummy<IDictionary<string, string>>();
@@ -712,7 +1307,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_both_dictionaries_are_null()
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_both_read_only_dictionaries_are_null()
         {
             // Arrange
             IReadOnlyDictionary<string, string> item1 = null;
@@ -726,7 +1321,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_one_but_not_both_dictionaries_are_null()
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_one_but_not_both_read_only_dictionaries_are_null()
         {
             // Arrange
             var notNullDictionary = A.Dummy<IReadOnlyDictionary<string, string>>();
@@ -741,7 +1336,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_dictionaries_are_not_equal()
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_read_only_dictionaries_are_not_equal()
         {
             // Arrange
             IReadOnlyDictionary<string, string> dictionary1a = new Dictionary<string, string>();
@@ -822,7 +1417,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_dictionaries_are_equal()
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_read_only_dictionaries_are_equal()
         {
             // Arrange
             IReadOnlyDictionary<string, string> dictionary1a = new Dictionary<string, string>();
@@ -868,7 +1463,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_dictionaries_are_not_equal_and_values_are_dictionaries_themselves()
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_read_only_dictionaries_are_not_equal_and_values_are_read_only_dictionaries_themselves()
         {
             // Arrange
 
@@ -1000,7 +1595,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_dictionaries_are_equal_and_values_are_dictionaries_themselves()
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_read_only_dictionaries_are_equal_and_values_are_read_only_dictionaries_themselves()
         {
             // Arrange
             // mix-up order of key/value pairs in dictionaries
@@ -1130,7 +1725,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_dictionaries_are_not_equal_and_values_are_ordered_enumerables()
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_read_only_dictionaries_are_not_equal_and_values_are_ordered_enumerables()
         {
             // Arrange
 
@@ -1192,7 +1787,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_dictionaries_are_equal_and_values_are_ordered_enumerables()
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_read_only_dictionaries_are_equal_and_values_are_ordered_enumerables()
         {
             // Arrange
 
@@ -1254,7 +1849,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_dictionaries_are_not_equal_and_values_are_not_ordered_enumerables()
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_read_only_dictionaries_are_not_equal_and_values_are_not_ordered_enumerables()
         {
             // Arrange
 
@@ -1316,7 +1911,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_dictionaries_are_equal_and_values_are_not_ordered_enumerables()
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_read_only_dictionaries_are_equal_and_values_are_not_ordered_enumerables()
         {
             // Arrange
 
