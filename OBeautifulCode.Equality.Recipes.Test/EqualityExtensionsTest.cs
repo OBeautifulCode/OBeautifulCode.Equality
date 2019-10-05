@@ -15,6 +15,8 @@ namespace OBeautifulCode.Equality.Recipes.Test
 
     using FluentAssertions;
 
+    using OBeautifulCode.AutoFakeItEasy;
+
     using Xunit;
 
     public static class EqualityExtensionsTest
@@ -612,6 +614,25 @@ namespace OBeautifulCode.Equality.Recipes.Test
 
             // Assert
             actual1.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_generating_collection_using_Some_ReadOnlyDummies()
+        {
+            // Arrange
+            var item1a = Some.Dummies<string>(10);
+            var item1b = item1a.ToList();
+
+            var item2a = Some.ReadOnlyDummies<string>(10);
+            var item2b = item2a.ToList();
+
+            // Act
+            var actual1 = EqualityExtensions.IsEqualTo(item1a, item1b);
+            var actual2 = EqualityExtensions.IsEqualTo(item2a, item2b);
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
         }
 
         [Fact]
