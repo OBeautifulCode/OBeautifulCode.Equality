@@ -308,6 +308,13 @@ namespace OBeautifulCode.Equality.Recipes
         private static bool IsComparable(
             Type type)
         {
+            // Previously, we called Comparer<T>.Default and checked whether that was equal to ObjectComparer<T>.
+            // If so, we considered the type to be NOT comparable.  Comparer<T>.Default checks, among other things,
+            // whether T is IComparable<T>.  Unfortunately, types like Enum don't implement IComparable<T>,
+            // but are IComparable.  So for enums, Comparer<T>.Default returns ObjectComparer<T>.  It turns out,
+            // ObjectComparer<T> doesn't just check for reference equality.  Among other things, it checks whether
+            // the type is IComparable.  So we combined the approach taken by Comparer<T>.Default and ObjectComparer<T>
+            // into the follow...
             bool result;
 
             var genericComparableType = UnboundGenericComparableType.MakeGenericType(type);
