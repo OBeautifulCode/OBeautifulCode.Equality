@@ -1331,7 +1331,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         public static void IsDictionaryEqualTo___Should_return_true___When_dictionaries_contain_different_equality_comparers_but_contain_the_same_keys_as_evaluated_by_those_comparers()
         {
             // Arrange
-            IDictionary<string, ICollection<string>> item1 = new Dictionary<string, ICollection<string>>(StringComparer.InvariantCulture)
+            IDictionary<string, ICollection<string>> item1 = new Dictionary<string, ICollection<string>>(StringComparer.Ordinal)
             {
                 {
                     "whatever1",
@@ -1342,7 +1342,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
                     new[] { "ghi", "jkl" }
                 },
             };
-            IDictionary<string, ICollection<string>> item2 = new Dictionary<string, ICollection<string>>(StringComparer.InvariantCultureIgnoreCase)
+            IDictionary<string, ICollection<string>> item2 = new Dictionary<string, ICollection<string>>(StringComparer.OrdinalIgnoreCase)
             {
                 {
                     "whatever1",
@@ -1367,7 +1367,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         public static void IsDictionaryEqualTo___Should_return_false___When_dictionaries_contain_different_equality_comparers_and_contain_different_keys_as_evaluated_by_those_comparers()
         {
             // Arrange
-            IDictionary<string, ICollection<string>> item1 = new Dictionary<string, ICollection<string>>(StringComparer.InvariantCulture)
+            IDictionary<string, ICollection<string>> item1 = new Dictionary<string, ICollection<string>>(StringComparer.Ordinal)
             {
                 {
                     "whatever1",
@@ -1378,7 +1378,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
                     new[] { "ghi", "jkl" }
                 },
             };
-            IDictionary<string, ICollection<string>> item2 = new Dictionary<string, ICollection<string>>(StringComparer.InvariantCultureIgnoreCase)
+            IDictionary<string, ICollection<string>> item2 = new Dictionary<string, ICollection<string>>(StringComparer.OrdinalIgnoreCase)
             {
                 {
                     "WHATEVER1",
@@ -2095,7 +2095,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_dictionaries_contain_different_equality_comparers_but_contain_the_same_keys_as_evaluated_by_those_comparers()
         {
             // Arrange
-            IReadOnlyDictionary<string, ICollection<string>> item1 = new Dictionary<string, ICollection<string>>(StringComparer.InvariantCulture)
+            IReadOnlyDictionary<string, ICollection<string>> item1 = new Dictionary<string, ICollection<string>>(StringComparer.Ordinal)
             {
                 {
                     "whatever1",
@@ -2106,7 +2106,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
                     new[] { "ghi", "jkl" }
                 },
             };
-            IReadOnlyDictionary<string, ICollection<string>> item2 = new Dictionary<string, ICollection<string>>(StringComparer.InvariantCultureIgnoreCase)
+            IReadOnlyDictionary<string, ICollection<string>> item2 = new Dictionary<string, ICollection<string>>(StringComparer.OrdinalIgnoreCase)
             {
                 {
                     "whatever1",
@@ -2131,7 +2131,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_dictionaries_contain_different_equality_comparers_and_contain_different_keys_as_evaluated_by_those_comparers()
         {
             // Arrange
-            IReadOnlyDictionary<string, ICollection<string>> item1 = new Dictionary<string, ICollection<string>>(StringComparer.InvariantCulture)
+            IReadOnlyDictionary<string, ICollection<string>> item1 = new Dictionary<string, ICollection<string>>(StringComparer.Ordinal)
             {
                 {
                     "whatever1",
@@ -2142,7 +2142,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
                     new[] { "ghi", "jkl" }
                 },
             };
-            IReadOnlyDictionary<string, ICollection<string>> item2 = new Dictionary<string, ICollection<string>>(StringComparer.InvariantCultureIgnoreCase)
+            IReadOnlyDictionary<string, ICollection<string>> item2 = new Dictionary<string, ICollection<string>>(StringComparer.OrdinalIgnoreCase)
             {
                 {
                     "WHATEVER1",
