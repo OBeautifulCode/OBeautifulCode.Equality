@@ -1328,6 +1328,78 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
+        public static void IsDictionaryEqualTo___Should_return_true___When_dictionaries_contain_different_equality_comparers_but_contain_the_same_keys_as_evaluated_by_those_comparers()
+        {
+            // Arrange
+            IDictionary<string, ICollection<string>> item1 = new Dictionary<string, ICollection<string>>(StringComparer.InvariantCulture)
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi", "jkl" }
+                },
+            };
+            IDictionary<string, ICollection<string>> item2 = new Dictionary<string, ICollection<string>>(StringComparer.InvariantCultureIgnoreCase)
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi", "jkl" }
+                },
+            };
+
+            // Act
+            var actual1 = item1.IsDictionaryEqualTo(item2);
+            var actual2 = item2.IsDictionaryEqualTo(item1);
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsDictionaryEqualTo___Should_return_false___When_dictionaries_contain_different_equality_comparers_and_contain_different_keys_as_evaluated_by_those_comparers()
+        {
+            // Arrange
+            IDictionary<string, ICollection<string>> item1 = new Dictionary<string, ICollection<string>>(StringComparer.InvariantCulture)
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi", "jkl" }
+                },
+            };
+            IDictionary<string, ICollection<string>> item2 = new Dictionary<string, ICollection<string>>(StringComparer.InvariantCultureIgnoreCase)
+            {
+                {
+                    "WHATEVER1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "WHATEVER2",
+                    new[] { "ghi", "jkl" }
+                },
+            };
+
+            // Act
+            var actual1 = item1.IsDictionaryEqualTo(item2);
+            var actual2 = item2.IsDictionaryEqualTo(item1);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+        }
+
+        [Fact]
         public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_both_read_only_dictionaries_are_null()
         {
             // Arrange
@@ -2017,6 +2089,78 @@ namespace OBeautifulCode.Equality.Recipes.Test
             actual1.Should().BeTrue();
             actual2.Should().BeTrue();
             actual3.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_dictionaries_contain_different_equality_comparers_but_contain_the_same_keys_as_evaluated_by_those_comparers()
+        {
+            // Arrange
+            IReadOnlyDictionary<string, ICollection<string>> item1 = new Dictionary<string, ICollection<string>>(StringComparer.InvariantCulture)
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi", "jkl" }
+                },
+            };
+            IReadOnlyDictionary<string, ICollection<string>> item2 = new Dictionary<string, ICollection<string>>(StringComparer.InvariantCultureIgnoreCase)
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi", "jkl" }
+                },
+            };
+
+            // Act
+            var actual1 = item1.IsReadOnlyDictionaryEqualTo(item2);
+            var actual2 = item2.IsReadOnlyDictionaryEqualTo(item1);
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_dictionaries_contain_different_equality_comparers_and_contain_different_keys_as_evaluated_by_those_comparers()
+        {
+            // Arrange
+            IReadOnlyDictionary<string, ICollection<string>> item1 = new Dictionary<string, ICollection<string>>(StringComparer.InvariantCulture)
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi", "jkl" }
+                },
+            };
+            IReadOnlyDictionary<string, ICollection<string>> item2 = new Dictionary<string, ICollection<string>>(StringComparer.InvariantCultureIgnoreCase)
+            {
+                {
+                    "WHATEVER1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "WHATEVER2",
+                    new[] { "ghi", "jkl" }
+                },
+            };
+
+            // Act
+            var actual1 = item1.IsReadOnlyDictionaryEqualTo(item2);
+            var actual2 = item2.IsReadOnlyDictionaryEqualTo(item1);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
         }
 
         [Fact]
