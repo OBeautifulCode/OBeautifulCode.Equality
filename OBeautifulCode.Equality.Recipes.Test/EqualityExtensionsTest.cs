@@ -636,6 +636,57 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
+        public static void IsEqualTo___Should_return_false___When_two_DateTime_objects_representing_the_same_moment_have_a_different_Kind()
+        {
+            // Arrange
+            var referenceTime = DateTime.Now;
+
+            var item1 = new DateTime(referenceTime.Ticks, DateTimeKind.Utc);
+            var item2 = new DateTime(referenceTime.Ticks, DateTimeKind.Local);
+            var item3 = new DateTime(referenceTime.Ticks, DateTimeKind.Unspecified);
+
+            // Act
+            var actual1 = item1.IsEqualTo(item2);
+            var actual2 = item1.IsEqualTo(item3);
+            var actual3 = item2.IsEqualTo(item3);
+
+            // Assert
+            // first assert that these are considered equal by .NET
+            item1.Should().Be(item2);
+            item1.Should().Be(item3);
+            item2.Should().Be(item3);
+
+            // now assert that our methods considers them NOT equal
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+            actual3.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_two_DateTime_objects_representing_the_same_moment_have_the_same_Kind()
+        {
+            // Arrange
+            var item1a = DateTime.UtcNow;
+            var item1b = item1a.AddMilliseconds(0d);
+
+            var item2a = DateTime.Now;
+            var item2b = item2a.AddMilliseconds(0d);
+
+            var item3a = new DateTime(DateTime.Now.Ticks, DateTimeKind.Unspecified);
+            var item3b = item3a.AddMilliseconds(0d);
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+            var actual2 = item2a.IsEqualTo(item2b);
+            var actual3 = item3a.IsEqualTo(item3b);
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
+            actual3.Should().BeTrue();
+        }
+
+        [Fact]
         public static void IsDictionaryEqualTo___Should_return_true___When_both_dictionaries_are_null()
         {
             // Arrange
