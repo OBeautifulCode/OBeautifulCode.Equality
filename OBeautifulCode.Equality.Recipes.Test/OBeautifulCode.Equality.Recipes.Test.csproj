@@ -106,6 +106,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\SuppressBecause.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="EqualityComparers\DateTimeEqualityComparerTest.cs" />
     <Compile Include="EqualityExtensionsTest.cs" />
     <Compile Include="EqualityComparers\EnumerableEqualityComparerTest.cs" />
     <Compile Include="GlobalSuppressions.cs" />

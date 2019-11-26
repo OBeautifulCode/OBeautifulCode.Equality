@@ -57,13 +57,6 @@ namespace OBeautifulCode.Equality.Recipes
 
             var result = equalityComparerToUse.Equals(item1, item2);
 
-            // We need to special-case DateTime because two DateTimes, representing the same moment
-            // are considered equal even if they have a different Kind.
-            if (typeof(T) == typeof(DateTime))
-            {
-                result = result && (Convert.ToDateTime(item1, CultureInfo.InvariantCulture).Kind == Convert.ToDateTime(item2, CultureInfo.InvariantCulture).Kind);
-            }
-
             return result;
         }
 

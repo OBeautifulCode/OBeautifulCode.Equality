@@ -636,7 +636,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsEqualTo___Should_return_false___When_two_DateTime_objects_representing_the_same_moment_have_a_different_Kind()
+        public static void IsEqualTo___Should_return_false___When_two_DateTime_objects_with_the_same_Ticks_have_a_different_Kind()
         {
             // Arrange
             var referenceTime = DateTime.Now;
@@ -663,7 +663,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsEqualTo___Should_return_true___When_two_DateTime_objects_representing_the_same_moment_have_the_same_Kind()
+        public static void IsEqualTo___Should_return_true___When_two_DateTime_objects_having_the_same_Ticks_have_the_same_Kind()
         {
             // Arrange
             var item1a = DateTime.UtcNow;
@@ -1451,6 +1451,119 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
+        public static void IsDictionaryEqualTo___Should_return_false___When_dictionaries_contain_two_DateTime_values_having_the_same_Ticks_but_different_Kind_for_the_same_keys()
+        {
+            // Arrange
+            var dateTime1 = DateTime.Now;
+            var dateTime2 = DateTime.UtcNow;
+
+            IDictionary<string, DateTime> item1 = new Dictionary<string, DateTime>()
+            {
+                {
+                    "whatever1",
+                    dateTime1
+                },
+                {
+                    "whatever2",
+                    dateTime2
+                },
+            };
+
+            IDictionary<string, DateTime> item2a = new Dictionary<string, DateTime>()
+            {
+                {
+                    "whatever1",
+                    dateTime1
+                },
+                {
+                    "whatever2",
+                    new DateTime(dateTime2.Ticks, DateTimeKind.Local)
+                },
+            };
+
+            IDictionary<string, DateTime> item2b = new Dictionary<string, DateTime>()
+            {
+                {
+                    "whatever1",
+                    dateTime1
+                },
+                {
+                    "whatever2",
+                    new DateTime(dateTime2.Ticks, DateTimeKind.Unspecified)
+                },
+            };
+
+            IDictionary<string, DateTime> item2c = new Dictionary<string, DateTime>()
+            {
+                {
+                    "whatever1",
+                    new DateTime(dateTime1.Ticks, DateTimeKind.Unspecified)
+                },
+                {
+                    "whatever2",
+                    dateTime2
+                },
+            };
+
+            // Act
+            var actual1 = item1.IsDictionaryEqualTo(item2a);
+            var actual2 = item1.IsDictionaryEqualTo(item2b);
+            var actual3 = item1.IsDictionaryEqualTo(item2c);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+            actual3.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsDictionaryEqualTo___Should_return_true___When_dictionaries_contain_two_DateTime_values_having_the_same_Ticks_and_same_Kind_for_the_same_keys()
+        {
+            // Arrange
+            var dateTime1 = DateTime.Now;
+            var dateTime2 = DateTime.UtcNow;
+            var dateTime3 = new DateTime(DateTime.Now.Ticks, DateTimeKind.Unspecified);
+
+            IDictionary<string, DateTime> item1 = new Dictionary<string, DateTime>()
+            {
+                {
+                    "whatever1",
+                    dateTime1
+                },
+                {
+                    "whatever2",
+                    dateTime2
+                },
+                {
+                    "whatever3",
+                    dateTime3
+                },
+            };
+
+            IDictionary<string, DateTime> item2 = new Dictionary<string, DateTime>()
+            {
+                {
+                    "whatever1",
+                    dateTime1
+                },
+                {
+                    "whatever2",
+                    dateTime2
+                },
+                {
+                    "whatever3",
+                    dateTime3
+                },
+            };
+
+            // Act
+            var actual = item1.IsDictionaryEqualTo(item2);
+
+            // Assert
+            actual.Should().BeTrue();
+        }
+
+        [Fact]
         public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_both_read_only_dictionaries_are_null()
         {
             // Arrange
@@ -2215,6 +2328,119 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_dictionaries_contain_two_DateTime_values_having_the_same_Ticks_but_different_Kind_for_the_same_keys()
+        {
+            // Arrange
+            var dateTime1 = DateTime.Now;
+            var dateTime2 = DateTime.UtcNow;
+
+            IReadOnlyDictionary<string, DateTime> item1 = new Dictionary<string, DateTime>()
+            {
+                {
+                    "whatever1",
+                    dateTime1
+                },
+                {
+                    "whatever2",
+                    dateTime2
+                },
+            };
+
+            IReadOnlyDictionary<string, DateTime> item2a = new Dictionary<string, DateTime>()
+            {
+                {
+                    "whatever1",
+                    dateTime1
+                },
+                {
+                    "whatever2",
+                    new DateTime(dateTime2.Ticks, DateTimeKind.Local)
+                },
+            };
+
+            IReadOnlyDictionary<string, DateTime> item2b = new Dictionary<string, DateTime>()
+            {
+                {
+                    "whatever1",
+                    dateTime1
+                },
+                {
+                    "whatever2",
+                    new DateTime(dateTime2.Ticks, DateTimeKind.Unspecified)
+                },
+            };
+
+            IReadOnlyDictionary<string, DateTime> item2c = new Dictionary<string, DateTime>()
+            {
+                {
+                    "whatever1",
+                    new DateTime(dateTime1.Ticks, DateTimeKind.Unspecified)
+                },
+                {
+                    "whatever2",
+                    dateTime2
+                },
+            };
+
+            // Act
+            var actual1 = item1.IsReadOnlyDictionaryEqualTo(item2a);
+            var actual2 = item1.IsReadOnlyDictionaryEqualTo(item2b);
+            var actual3 = item1.IsReadOnlyDictionaryEqualTo(item2c);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+            actual3.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_dictionaries_contain_two_DateTime_values_having_the_same_Ticks_and_same_Kind_for_the_same_keys()
+        {
+            // Arrange
+            var dateTime1 = DateTime.Now;
+            var dateTime2 = DateTime.UtcNow;
+            var dateTime3 = new DateTime(DateTime.Now.Ticks, DateTimeKind.Unspecified);
+
+            IReadOnlyDictionary<string, DateTime> item1 = new Dictionary<string, DateTime>()
+            {
+                {
+                    "whatever1",
+                    dateTime1
+                },
+                {
+                    "whatever2",
+                    dateTime2
+                },
+                {
+                    "whatever3",
+                    dateTime3
+                },
+            };
+
+            IReadOnlyDictionary<string, DateTime> item2 = new Dictionary<string, DateTime>()
+            {
+                {
+                    "whatever1",
+                    dateTime1
+                },
+                {
+                    "whatever2",
+                    dateTime2
+                },
+                {
+                    "whatever3",
+                    dateTime3
+                },
+            };
+
+            // Act
+            var actual = item1.IsReadOnlyDictionaryEqualTo(item2);
+
+            // Assert
+            actual.Should().BeTrue();
+        }
+
+        [Fact]
         public static void IsSequenceEqualTo___Should_return_true___When_both_sequences_are_null()
         {
             // Arrange, Act
@@ -2509,6 +2735,77 @@ namespace OBeautifulCode.Equality.Recipes.Test
 
             // Assert
             actual1.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsSequenceEqualTo___Should_return_false___When_sets_contain_DateTime_objects_with_the_same_Ticks_but_different_Kind()
+        {
+            // Arrange
+            var utcDateTime = DateTime.UtcNow;
+            var localDateTime = DateTime.Now;
+
+            var item1 = new List<DateTime>
+            {
+                utcDateTime,
+                localDateTime,
+            };
+
+            var item2a = new List<DateTime>
+            {
+                new DateTime(utcDateTime.Ticks, DateTimeKind.Local),
+                localDateTime,
+            };
+
+            var item2b = new List<DateTime>
+            {
+                new DateTime(utcDateTime.Ticks, DateTimeKind.Unspecified),
+                localDateTime,
+            };
+
+            var item2c = new List<DateTime>
+            {
+                utcDateTime,
+                new DateTime(localDateTime.Ticks, DateTimeKind.Unspecified),
+            };
+
+            // Act
+            var actual1 = item1.IsSequenceEqualTo(item2a);
+            var actual2 = item1.IsSequenceEqualTo(item2b);
+            var actual3 = item1.IsSequenceEqualTo(item2c);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+            actual3.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsSequenceEqualTo___Should_return_true___When_sets_contain_DateTime_objects_with_the_same_Ticks_and_same_Kind()
+        {
+            // Arrange
+            var utcDateTime = DateTime.UtcNow;
+            var localDateTime = DateTime.Now;
+            var unspecifiedDateTime = new DateTime(DateTime.UtcNow.Ticks, DateTimeKind.Unspecified);
+
+            var item1 = new List<DateTime>
+            {
+                utcDateTime,
+                localDateTime,
+                unspecifiedDateTime,
+            };
+
+            var item2 = new List<DateTime>
+            {
+                utcDateTime,
+                localDateTime,
+                unspecifiedDateTime,
+            };
+
+            // Act
+            var actual = item1.IsSequenceEqualTo(item2);
+
+            // Assert
+            actual.Should().BeTrue();
         }
 
         [Fact]
@@ -2929,6 +3226,77 @@ namespace OBeautifulCode.Equality.Recipes.Test
 
             // Assert
             actual1.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsUnorderedEqualTo___Should_return_false___When_sets_contain_DateTime_objects_with_the_same_Ticks_but_different_Kind()
+        {
+            // Arrange
+            var utcDateTime = DateTime.UtcNow;
+            var localDateTime = DateTime.Now;
+
+            var item1 = new List<DateTime>
+            {
+                utcDateTime,
+                localDateTime,
+            };
+
+            var item2a = new List<DateTime>
+            {
+                new DateTime(utcDateTime.Ticks, DateTimeKind.Local),
+                localDateTime,
+            };
+
+            var item2b = new List<DateTime>
+            {
+                new DateTime(utcDateTime.Ticks, DateTimeKind.Unspecified),
+                localDateTime,
+            };
+
+            var item2c = new List<DateTime>
+            {
+                utcDateTime,
+                new DateTime(localDateTime.Ticks, DateTimeKind.Unspecified),
+            };
+
+            // Act
+            var actual1 = item1.IsUnorderedEqualTo(item2a);
+            var actual2 = item1.IsUnorderedEqualTo(item2b);
+            var actual3 = item1.IsUnorderedEqualTo(item2c);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+            actual3.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsUnorderedEqualTo___Should_return_true___When_sets_contain_DateTime_objects_with_the_same_Ticks_and_same_Kind()
+        {
+            // Arrange
+            var utcDateTime = DateTime.UtcNow;
+            var localDateTime = DateTime.Now;
+            var unspecifiedDateTime = new DateTime(DateTime.UtcNow.Ticks, DateTimeKind.Unspecified);
+
+            var item1 = new List<DateTime>
+            {
+                utcDateTime,
+                localDateTime,
+                unspecifiedDateTime,
+            };
+
+            var item2 = new List<DateTime>
+            {
+                localDateTime,
+                unspecifiedDateTime,
+                utcDateTime,
+            };
+
+            // Act
+            var actual = item1.IsUnorderedEqualTo(item2);
+
+            // Assert
+            actual.Should().BeTrue();
         }
     }
 }
