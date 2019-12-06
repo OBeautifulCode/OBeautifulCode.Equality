@@ -57,7 +57,7 @@ namespace OBeautifulCode.Assertion.Recipes
                 }
 
                 var valueAsEnumerable = (IEnumerable)assertionTracker.SubjectValue;
-                var enumerableType = assertionTracker.SubjectType.GetEnumerableElementType();
+                var enumerableType = assertionTracker.SubjectType.GetClosedEnumerableElementType();
 
                 var verifiableItem = new VerifiableItem
                 {

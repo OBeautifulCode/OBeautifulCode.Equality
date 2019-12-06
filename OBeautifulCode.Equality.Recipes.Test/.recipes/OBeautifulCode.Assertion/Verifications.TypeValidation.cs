@@ -225,7 +225,7 @@ namespace OBeautifulCode.Assertion.Recipes
         {
             var valueType = verifiableItem.ValueType;
 
-            var enumerableType = valueType.GetEnumerableElementType();
+            var enumerableType = valueType.GetClosedEnumerableElementType();
 
             if (enumerableType.IsValueType && (Nullable.GetUnderlyingType(enumerableType) == null))
             {
@@ -242,7 +242,7 @@ namespace OBeautifulCode.Assertion.Recipes
         {
             var valueType = verifiableItem.ValueType;
 
-            var dictionaryValueType = valueType.GetDictionaryValueType();
+            var dictionaryValueType = valueType.GetClosedDictionaryValueType();
 
             if (dictionaryValueType.IsValueType && (Nullable.GetUnderlyingType(dictionaryValueType) == null))
             {
@@ -261,7 +261,7 @@ namespace OBeautifulCode.Assertion.Recipes
 
             var validTypes = typeValidation.ReferenceTypes;
 
-            if (!validTypes.Any(_ => valueType.IsAssignableTo(_, treatUnboundGenericAsAssignableTo: true)))
+            if (!validTypes.Any(_ => valueType.IsAssignableTo(_, treatGenericTypeDefinitionAsAssignableTo: true)))
             {
                 ThrowSubjectUnexpectedType(verification, verifiableItem, validTypes);
             }
@@ -288,7 +288,7 @@ namespace OBeautifulCode.Assertion.Recipes
             VerifiableItem verifiableItem,
             TypeValidation typeValidation)
         {
-            var enumerableType = verifiableItem.ValueType.GetEnumerableElementType();
+            var enumerableType = verifiableItem.ValueType.GetClosedEnumerableElementType();
 
             foreach (var verificationParameter in verification.VerificationParameters)
             {
