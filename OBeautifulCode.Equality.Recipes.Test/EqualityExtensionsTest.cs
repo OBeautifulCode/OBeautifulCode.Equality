@@ -466,6 +466,54 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
+        public static void IsEqualTo___Should_return_false___When_enumerables_are_not_equal()
+        {
+            // Arrange
+            IEnumerable<string> item1a = new List<string> { "abc", "def" };
+            IEnumerable<string> item1b = new List<string> { "abc", "def", "ghi" };
+
+            IEnumerable<string> item2a = new List<string> { "abc", "def", "ghi" };
+            IEnumerable<string> item2b = new List<string> { "abc", "def", null };
+
+            IEnumerable<string> item3a = new List<string> { "abc", "def" };
+            IEnumerable<string> item3b = new List<string> { "aBc", "dEf" };
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+            var actual2 = item2a.IsEqualTo(item2b);
+            var actual3 = item3a.IsEqualTo(item3b);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+            actual3.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_enumerables_are_equal()
+        {
+            // Arrange
+            IEnumerable<string> item1a = new List<string> { "abc", null, "def" };
+            IEnumerable<string> item1b = new List<string> { "abc", null, "def" };
+
+            IEnumerable<string> item2a = new string[0];
+            IEnumerable<string> item2b = new string[0];
+
+            IEnumerable<string> item3a = new List<string> { "abc", null, "def" };
+            IEnumerable<string> item3b = new List<string> { "def", "abc", null };
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+            var actual2 = item2a.IsEqualTo(item2b);
+            var actual3 = item3a.IsEqualTo(item3b);
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
+            actual3.Should().BeTrue();
+        }
+
+        [Fact]
         public static void IsEqualTo___Should_return_false___When_multiple_level_data_structures_are_not_equal()
         {
             // Arrange
@@ -1105,7 +1153,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsDictionaryEqualTo___Should_return_false___When_dictionaries_are_not_equal_and_values_are_ordered_enumerables()
+        public static void IsDictionaryEqualTo___Should_return_false___When_dictionaries_are_not_equal_and_values_are_ordered_collections()
         {
             // Arrange
 
@@ -1167,7 +1215,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsDictionaryEqualTo___Should_return_true___When_dictionaries_are_equal_and_values_are_ordered_enumerables()
+        public static void IsDictionaryEqualTo___Should_return_true___When_dictionaries_are_equal_and_values_are_ordered_collections()
         {
             // Arrange
 
@@ -1229,7 +1277,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsDictionaryEqualTo___Should_return_false___When_dictionaries_are_not_equal_and_values_are_not_ordered_enumerables()
+        public static void IsDictionaryEqualTo___Should_return_false___When_dictionaries_are_not_equal_and_values_are_not_ordered_collections()
         {
             // Arrange
 
@@ -1291,7 +1339,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsDictionaryEqualTo___Should_return_true___When_dictionaries_are_equal_and_values_are_not_ordered_enumerables()
+        public static void IsDictionaryEqualTo___Should_return_true___When_dictionaries_are_equal_and_values_are_not_ordered_collections()
         {
             // Arrange
 
@@ -1356,6 +1404,156 @@ namespace OBeautifulCode.Equality.Recipes.Test
                 },
             };
             IDictionary<string, ICollection<string>> item3b = new Dictionary<string, ICollection<string>>
+            {
+                {
+                    "whatever2",
+                    new[] { "jkl", "ghi" }
+                },
+                {
+                    "whatever1",
+                    new[] { "def", "abc" }
+                },
+            };
+
+            // Act
+            var actual1 = item1a.IsDictionaryEqualTo(item1b);
+            var actual2 = item2a.IsDictionaryEqualTo(item2b);
+            var actual3 = item3a.IsDictionaryEqualTo(item3b);
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
+            actual3.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsDictionaryEqualTo___Should_return_false___When_dictionaries_are_not_equal_and_values_are_enumerables()
+        {
+            // Arrange
+
+            // enumerables have different elements
+            IDictionary<string, IEnumerable<string>> item1a = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi", "jkl" }
+                },
+            };
+            IDictionary<string, IEnumerable<string>> item1b = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi" }
+                },
+            };
+
+            // enumerables have different elements
+            IDictionary<string, IEnumerable<string>> item2a = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi", "jkl" }
+                },
+            };
+            IDictionary<string, IEnumerable<string>> item2b = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi", "jkl", "ghi" }
+                },
+            };
+
+            // Act
+            var actual1 = item1a.IsDictionaryEqualTo(item1b);
+            var actual2 = item2a.IsDictionaryEqualTo(item2b);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsDictionaryEqualTo___Should_return_true___When_dictionaries_are_equal_and_values_are_enumerables()
+        {
+            // Arrange
+
+            // different kinds of concrete ordered enumerables
+            IDictionary<string, IEnumerable<string>> item1a = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi", "jkl" }
+                },
+            };
+            IDictionary<string, IEnumerable<string>> item1b = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new List<string> { "ghi", "jkl" }
+                },
+            };
+
+            // null and empty enumerables
+            IDictionary<string, IEnumerable<string>> item2a = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new string[0]
+                },
+                {
+                    "whatever2",
+                    null
+                },
+            };
+            IDictionary<string, IEnumerable<string>> item2b = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new List<string>()
+                },
+                {
+                    "whatever2",
+                    null
+                },
+            };
+
+            // elements in different order
+            IDictionary<string, IEnumerable<string>> item3a = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi", "jkl" }
+                },
+            };
+            IDictionary<string, IEnumerable<string>> item3b = new Dictionary<string, IEnumerable<string>>
             {
                 {
                     "whatever2",
@@ -1982,7 +2180,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_read_only_dictionaries_are_not_equal_and_values_are_ordered_enumerables()
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_read_only_dictionaries_are_not_equal_and_values_are_ordered_collections()
         {
             // Arrange
 
@@ -2044,7 +2242,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_read_only_dictionaries_are_equal_and_values_are_ordered_enumerables()
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_read_only_dictionaries_are_equal_and_values_are_ordered_collections()
         {
             // Arrange
 
@@ -2106,7 +2304,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_read_only_dictionaries_are_not_equal_and_values_are_not_ordered_enumerables()
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_read_only_dictionaries_are_not_equal_and_values_are_not_ordered_collections()
         {
             // Arrange
 
@@ -2168,7 +2366,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_read_only_dictionaries_are_equal_and_values_are_not_ordered_enumerables()
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_read_only_dictionaries_are_equal_and_values_are_not_ordered_collections()
         {
             // Arrange
 
@@ -2233,6 +2431,156 @@ namespace OBeautifulCode.Equality.Recipes.Test
                 },
             };
             IReadOnlyDictionary<string, ICollection<string>> item3b = new Dictionary<string, ICollection<string>>
+            {
+                {
+                    "whatever2",
+                    new[] { "jkl", "ghi" }
+                },
+                {
+                    "whatever1",
+                    new[] { "def", "abc" }
+                },
+            };
+
+            // Act
+            var actual1 = item1a.IsReadOnlyDictionaryEqualTo(item1b);
+            var actual2 = item2a.IsReadOnlyDictionaryEqualTo(item2b);
+            var actual3 = item3a.IsReadOnlyDictionaryEqualTo(item3b);
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
+            actual3.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_read_only_dictionaries_are_not_equal_and_values_are_enumerables()
+        {
+            // Arrange
+
+            // enumerables have different elements
+            IReadOnlyDictionary<string, IEnumerable<string>> item1a = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi", "jkl" }
+                },
+            };
+            IReadOnlyDictionary<string, IEnumerable<string>> item1b = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi" }
+                },
+            };
+
+            // enumerables have different elements
+            IReadOnlyDictionary<string, IEnumerable<string>> item2a = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi", "jkl" }
+                },
+            };
+            IReadOnlyDictionary<string, IEnumerable<string>> item2b = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi", "jkl", "ghi" }
+                },
+            };
+
+            // Act
+            var actual1 = item1a.IsReadOnlyDictionaryEqualTo(item1b);
+            var actual2 = item2a.IsReadOnlyDictionaryEqualTo(item2b);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_read_only_dictionaries_are_equal_and_values_are_enumerables()
+        {
+            // Arrange
+
+            // different kinds of concrete ordered enumerables
+            IReadOnlyDictionary<string, IEnumerable<string>> item1a = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi", "jkl" }
+                },
+            };
+            IReadOnlyDictionary<string, IEnumerable<string>> item1b = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new List<string> { "ghi", "jkl" }
+                },
+            };
+
+            // null and empty enumerables
+            IReadOnlyDictionary<string, IEnumerable<string>> item2a = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new string[0]
+                },
+                {
+                    "whatever2",
+                    null
+                },
+            };
+            IReadOnlyDictionary<string, IEnumerable<string>> item2b = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new List<string>()
+                },
+                {
+                    "whatever2",
+                    null
+                },
+            };
+
+            // elements in different order
+            IReadOnlyDictionary<string, IEnumerable<string>> item3a = new Dictionary<string, IEnumerable<string>>
+            {
+                {
+                    "whatever1",
+                    new[] { "abc", "def" }
+                },
+                {
+                    "whatever2",
+                    new[] { "ghi", "jkl" }
+                },
+            };
+            IReadOnlyDictionary<string, IEnumerable<string>> item3b = new Dictionary<string, IEnumerable<string>>
             {
                 {
                     "whatever2",
@@ -2518,7 +2866,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsSequenceEqualTo___Should_return_false___When_sets_contains_IEnumerables_and_sets_are_not_equal()
+        public static void IsSequenceEqualTo___Should_return_false___When_sets_contains_collections_and_sets_are_not_equal()
         {
             // sub-enumerables have items in different order and order matters
             var item1a = new List<List<string>>
@@ -2558,7 +2906,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsSequenceEqualTo___Should_return_true___When_sets_contain_IEnumerables_and_sets_are_equal()
+        public static void IsSequenceEqualTo___Should_return_true___When_sets_contain_collections_and_sets_are_equal()
         {
             // Arrange
 
@@ -2599,6 +2947,58 @@ namespace OBeautifulCode.Equality.Recipes.Test
             // Assert
             actual1.Should().BeTrue();
             actual2.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsSequenceEqualTo___Should_return_false___When_sets_contains_enumerables_and_sets_are_not_equal()
+        {
+            // sub-enumerables have different items in different order, but order doesn't matter
+            var item1a = new List<IEnumerable<string>>
+            {
+                new List<string> { "abc", "def" },
+                new List<string> { "ghi", "jkl" },
+                new List<string> { "mno", "pqr" },
+            };
+            var item1b = new List<IEnumerable<string>>
+            {
+                new List<string> { "abc", "def" },
+                new List<string> { "ghi", "jkl", "ghi" },
+                new List<string> { "mno", "pqr" },
+            };
+
+            // Act
+            var actual1 = item1a.IsSequenceEqualTo(item1b);
+
+            // Assert
+            actual1.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsSequenceEqualTo___Should_return_true___When_sets_contain_enumerables_and_sets_are_equal()
+        {
+            // Arrange
+
+            // sub-enumerables have same items in different order, but order doesn't matter
+            var item1a = new List<IEnumerable<string>>
+            {
+                new List<string> { "abc", "def" },
+                new List<string> { "abc", "def" },
+                new List<string> { "ghi", "jkl" },
+                new List<string> { "mno", null, "pqr" },
+            };
+            var item1b = new List<IEnumerable<string>>
+            {
+                new List<string> { "abc", "def" },
+                new List<string> { "def", "abc" },
+                new List<string> { "jkl", "ghi" },
+                new List<string> { "mno", "pqr", null },
+            };
+
+            // Act
+            var actual1 = item1a.IsSequenceEqualTo(item1b);
+
+            // Assert
+            actual1.Should().BeTrue();
         }
 
         [Fact]
@@ -3003,7 +3403,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsUnorderedEqualTo___Should_return_false___When_sets_contain_IEnumerables_themselves_and_sets_have_one_or_more_differences()
+        public static void IsUnorderedEqualTo___Should_return_false___When_sets_contain_collections_themselves_and_sets_have_one_or_more_differences()
         {
             // Arrange
 
@@ -3045,7 +3445,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void IsUnorderedEqualTo___Should_return_true___When_sets_contain_IEnumerables_themselves_and_sets_are_equal()
+        public static void IsUnorderedEqualTo___Should_return_true___When_sets_contain_collections_themselves_and_sets_are_equal()
         {
             // Arrange
 
@@ -3086,6 +3486,58 @@ namespace OBeautifulCode.Equality.Recipes.Test
             // Assert
             actual1.Should().BeTrue();
             actual2.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsUnorderedEqualTo___Should_return_false___When_sets_contain_enumerables_themselves_and_sets_have_one_or_more_differences()
+        {
+            // Arrange
+
+            // sub-enumerables have different items in different order, but order doesn't matter
+            var item1a = new List<IEnumerable<string>>
+            {
+                new List<string> { "abc", "def" },
+                new List<string> { "ghi", "jkl" },
+                new List<string> { "mno", "pqr" },
+            };
+            var item1b = new List<IEnumerable<string>>
+            {
+                new List<string> { "abc", "def" },
+                new List<string> { "ghi", "jkl", "ghi" },
+                new List<string> { "mno", "pqr" },
+            };
+
+            // Act
+            var actual1 = item1a.IsUnorderedEqualTo(item1b);
+
+            // Assert
+            actual1.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsUnorderedEqualTo___Should_return_true___When_sets_contain_enumerables_themselves_and_sets_are_equal()
+        {
+            // Arrange
+
+            // sub-enumerables have same items in different order, but order doesn't matter
+            var item1a = new List<IEnumerable<string>>
+            {
+                new List<string> { "abc", "def" },
+                new List<string> { "ghi", "jkl" },
+                new List<string> { "mno", null, "pqr" },
+            };
+            var item1b = new List<IEnumerable<string>>
+            {
+                new List<string> { null, "mno", "pqr" },
+                new List<string> { "jkl", "ghi" },
+                new List<string> { "def", "abc" },
+            };
+
+            // Act
+            var actual1 = item1a.IsUnorderedEqualTo(item1b);
+
+            // Assert
+            actual1.Should().BeTrue();
         }
 
         [Fact]
