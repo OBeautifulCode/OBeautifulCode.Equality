@@ -15,7 +15,7 @@ namespace OBeautifulCode.Equality.Recipes
 
     using OBeautifulCode.CodeAnalysis.Recipes;
 
-    using static System.FormattableString;
+    using static global::System.FormattableString;
 
     /// <summary>
     /// An implementation of <see cref="IEqualityComparer{T}"/> for any <see cref="IEnumerable{T}"/>.

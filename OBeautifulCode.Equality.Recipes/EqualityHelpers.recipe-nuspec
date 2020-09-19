@@ -6,7 +6,7 @@
     <tags>equality comparer iequalitycomparer</tags>
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.Equality/master/OBeautifulCode.Equality.Recipes/nuget-icon.png</iconUrl>
     <dependencies>
-      <dependency id="OBeautifulCode.Type.Recipes.TypeExtensions" version="1.0.67" />
+      <dependency id="OBeautifulCode.Type.Recipes.TypeExtensions" version="1.0.68" />
       <dependency id="OBeautifulCode.CodeAnalysis.Recipes.SuppressBecause" version="1.0.6" />
     </dependencies>
   </metadata>
