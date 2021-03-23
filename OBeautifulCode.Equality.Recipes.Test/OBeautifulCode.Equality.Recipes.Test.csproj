@@ -108,6 +108,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="EqualityComparers\ByteArrayEqualityComparerTest.cs" />
     <Compile Include="EqualityComparers\DateTimeEqualityComparerTest.cs" />
     <Compile Include="EqualityExtensionsTest.cs" />
     <Compile Include="EqualityComparers\EnumerableEqualityComparerTest.cs" />

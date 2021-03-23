@@ -332,6 +332,74 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
+        public static void IsEqualTo___Should_return_false___When_one_byte_array_is_null_and_the_other_is_not_null()
+        {
+            // Arrange
+            byte[] byteArray1 = null;
+            var byteArray2 = Some.Dummies<byte>().ToArray();
+
+            // Act
+            var result1 = byteArray1.IsEqualTo(byteArray2);
+            var result2 = byteArray2.IsEqualTo(byteArray1);
+
+            // Assert
+            result1.Should().BeFalse();
+            result2.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_both_bytes_arrays_are_the_same_object_reference()
+        {
+            // Arrange
+            var byteArray = Some.Dummies<byte>().ToArray();
+
+            // Act
+            var result = byteArray.IsEqualTo(byteArray);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_false___When_byte_arrays_are_not_equal()
+        {
+            // Arrange
+            var byteArray1a = Some.Dummies<byte>().ToArray();
+            var byteArray1b = byteArray1a.Concat(new[] { A.Dummy<byte>() }).ToArray();
+
+            var byteArray2a = Some.Dummies<byte>().ToArray();
+            var byteArray2b = new[] { A.Dummy<byte>() }.Concat(byteArray2a).ToArray();
+
+            var byteArray3a = Some.Dummies<byte>(5).ToArray();
+            var byteArray3b = Some.Dummies<byte>(5).ToArray();
+
+            // Act
+            var result1 = byteArray1a.IsEqualTo(byteArray1b);
+            var result2 = byteArray2a.IsEqualTo(byteArray2b);
+            var result3 = byteArray3a.IsEqualTo(byteArray3b);
+
+            // Assert
+            result1.Should().BeFalse();
+            result2.Should().BeFalse();
+            result3.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_byte_arrays_are_equal_but_not_the_same_object_reference()
+        {
+            // Arrange
+            var byteArray1 = Some.Dummies<byte>().ToArray();
+            var byteArray2 = new byte[byteArray1.Length];
+            Buffer.BlockCopy(byteArray1, 0, byteArray2, 0, byteArray1.Length);
+
+            // Act
+            var result = byteArray1.IsEqualTo(byteArray2);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
         public static void IsEqualTo___Should_return_false___When_arrays_are_not_equal()
         {
             // Arrange
