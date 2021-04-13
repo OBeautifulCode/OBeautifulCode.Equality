@@ -110,6 +110,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="EqualityComparers\ByteArrayEqualityComparerTest.cs" />
     <Compile Include="EqualityComparers\DateTimeEqualityComparerTest.cs" />
+    <Compile Include="EqualityComparers\LambdaBackedEqualityComparerTest.cs" />
     <Compile Include="EqualityExtensionsTest.cs" />
     <Compile Include="EqualityComparers\EnumerableEqualityComparerTest.cs" />
     <Compile Include="GlobalSuppressions.cs" />

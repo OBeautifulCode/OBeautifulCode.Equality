@@ -16,10 +16,11 @@
     <file src="HashCodeHelper.cs" target="content\net462\.recipes\OBeautifulCode.Equality\HashCodeHelper.cs" />
     <file src="EqualityComparers\ByteArrayEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\ByteArrayEqualityComparer.cs" />
     <file src="EqualityComparers\DateTimeEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\DateTimeEqualityComparer.cs" />
+    <file src="EqualityComparers\DictionaryEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\DictionaryEqualityComparer.cs" />
     <file src="EqualityComparers\EnumerableEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\EnumerableEqualityComparer.cs" />
     <file src="EqualityComparers\EnumerableEqualityComparerStrategy.cs" target="content\net462\.recipes\OBeautifulCode.Equality\EnumerableEqualityComparerStrategy.cs" />
-    <file src="EqualityComparers\DictionaryEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\DictionaryEqualityComparer.cs" />
-    <file src="EqualityComparers\ReadOnlyDictionaryEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
+    <file src="EqualityComparers\LambdaBackedEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\LambdaBackedEqualityComparer.cs" />
     <file src="EqualityComparers\NativeMethods.cs" target="content\net462\.recipes\OBeautifulCode.Equality\NativeMethods.cs" />
+    <file src="EqualityComparers\ReadOnlyDictionaryEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
   </files>
 </package>
