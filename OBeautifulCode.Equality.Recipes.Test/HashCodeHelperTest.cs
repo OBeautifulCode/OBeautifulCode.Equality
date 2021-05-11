@@ -800,6 +800,175 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
+        public static void Hash___Should_return_different_hash_codes___When_the_items_are_DateTime_objects_that_are_not_equal()
+        {
+            // Arrange
+            var value1a = DateTime.UtcNow;
+            var value1b = value1a.AddTicks(1);
+
+            var value2a = DateTime.Now;
+            var value2b = value2a.AddTicks(1);
+
+            var value3a = new DateTime(DateTime.UtcNow.Ticks, DateTimeKind.Unspecified);
+            var value3b = value3a.AddTicks(1);
+
+            var value4a = DateTime.UtcNow;
+            var value4b = new DateTime(value4a.Ticks, DateTimeKind.Local);
+
+            var value5a = DateTime.UtcNow;
+            var value5b = new DateTime(value5a.Ticks, DateTimeKind.Unspecified);
+
+            var value6a = DateTime.Now;
+            var value6b = new DateTime(value6a.Ticks, DateTimeKind.Unspecified);
+
+            // Act
+            var actual1a = HashCodeHelper.Initialize().Hash(value1a).Value;
+            var actual1b = HashCodeHelper.Initialize().Hash(value1b).Value;
+
+            var actual2a = HashCodeHelper.Initialize().Hash(value2a).Value;
+            var actual2b = HashCodeHelper.Initialize().Hash(value2b).Value;
+
+            var actual3a = HashCodeHelper.Initialize().Hash(value3a).Value;
+            var actual3b = HashCodeHelper.Initialize().Hash(value3b).Value;
+
+            var actual4a = HashCodeHelper.Initialize().Hash(value4a).Value;
+            var actual4b = HashCodeHelper.Initialize().Hash(value4b).Value;
+
+            var actual5a = HashCodeHelper.Initialize().Hash(value5a).Value;
+            var actual5b = HashCodeHelper.Initialize().Hash(value5b).Value;
+
+            var actual6a = HashCodeHelper.Initialize().Hash(value6a).Value;
+            var actual6b = HashCodeHelper.Initialize().Hash(value6b).Value;
+
+            // Assert
+            actual1a.Should().NotBe(actual1b);
+            actual2a.Should().NotBe(actual2b);
+            actual3a.Should().NotBe(actual3b);
+            actual4a.Should().NotBe(actual4b);
+            actual5a.Should().NotBe(actual5b);
+            actual6a.Should().NotBe(actual6b);
+        }
+
+        [Fact]
+        public static void Hash___Should_return_the_same_hash_code___When_the_items_are_DateTime_objects_that_are_equal()
+        {
+            // Arrange
+            var value1a = DateTime.UtcNow;
+            var value1b = new DateTime(value1a.Ticks, value1a.Kind);
+
+            var value2a = DateTime.Now;
+            var value2b = new DateTime(value2a.Ticks, value2a.Kind);
+
+            var value3a = new DateTime(1345342, DateTimeKind.Unspecified);
+            var value3b = new DateTime(value3a.Ticks, value3a.Kind);
+
+            var expected1 = HashCodeHelper.Initialize().Hash(value1a).Value;
+            var expected2 = HashCodeHelper.Initialize().Hash(value2a).Value;
+            var expected3 = HashCodeHelper.Initialize().Hash(value3a).Value;
+
+            // Act
+            var actual1 = HashCodeHelper.Initialize().Hash(value1b).Value;
+            var actual2 = HashCodeHelper.Initialize().Hash(value2b).Value;
+            var actual3 = HashCodeHelper.Initialize().Hash(value3b).Value;
+
+            // Assert
+            actual1.Should().Be(expected1);
+            actual2.Should().Be(expected2);
+            actual3.Should().Be(expected3);
+        }
+
+        [Fact]
+        public static void Hash___Should_return_different_hash_codes___When_the_items_are_Nullable_DateTime_objects_that_are_not_equal()
+        {
+            // Arrange
+            DateTime? value1a = DateTime.UtcNow;
+            DateTime value1b = ((DateTime)value1a).AddTicks(1);
+
+            DateTime? value2a = DateTime.Now;
+            DateTime? value2b = ((DateTime)value2a).AddTicks(1);
+
+            DateTime? value3a = new DateTime(DateTime.UtcNow.Ticks, DateTimeKind.Unspecified);
+            DateTime? value3b = ((DateTime)value3a).AddTicks(1);
+
+            DateTime? value4a = DateTime.UtcNow;
+            DateTime? value4b = new DateTime(((DateTime)value4a).Ticks, DateTimeKind.Local);
+
+            DateTime? value5a = DateTime.UtcNow;
+            DateTime? value5b = new DateTime(((DateTime)value5a).Ticks, DateTimeKind.Unspecified);
+
+            DateTime? value6a = DateTime.Now;
+            DateTime? value6b = new DateTime(((DateTime)value6a).Ticks, DateTimeKind.Unspecified);
+
+            DateTime? value7a = null;
+            DateTime? value7b = DateTime.UtcNow;
+
+            // Act
+            var actual1a = HashCodeHelper.Initialize().Hash(value1a).Value;
+            var actual1b = HashCodeHelper.Initialize().Hash(value1b).Value;
+
+            var actual2a = HashCodeHelper.Initialize().Hash(value2a).Value;
+            var actual2b = HashCodeHelper.Initialize().Hash(value2b).Value;
+
+            var actual3a = HashCodeHelper.Initialize().Hash(value3a).Value;
+            var actual3b = HashCodeHelper.Initialize().Hash(value3b).Value;
+
+            var actual4a = HashCodeHelper.Initialize().Hash(value4a).Value;
+            var actual4b = HashCodeHelper.Initialize().Hash(value4b).Value;
+
+            var actual5a = HashCodeHelper.Initialize().Hash(value5a).Value;
+            var actual5b = HashCodeHelper.Initialize().Hash(value5b).Value;
+
+            var actual6a = HashCodeHelper.Initialize().Hash(value6a).Value;
+            var actual6b = HashCodeHelper.Initialize().Hash(value6b).Value;
+
+            var actual7a = HashCodeHelper.Initialize().Hash(value7a).Value;
+            var actual7b = HashCodeHelper.Initialize().Hash(value7b).Value;
+
+            // Assert
+            actual1a.Should().NotBe(actual1b);
+            actual2a.Should().NotBe(actual2b);
+            actual3a.Should().NotBe(actual3b);
+            actual4a.Should().NotBe(actual4b);
+            actual5a.Should().NotBe(actual5b);
+            actual6a.Should().NotBe(actual6b);
+            actual7a.Should().NotBe(actual7b);
+        }
+
+        [Fact]
+        public static void Hash___Should_return_the_same_hash_code___When_the_items_are_Nullable_DateTime_objects_that_are_equal()
+        {
+            // Arrange
+            DateTime? value1a = DateTime.UtcNow;
+            DateTime? value1b = new DateTime(((DateTime)value1a).Ticks, ((DateTime)value1a).Kind);
+
+            DateTime? value2a = DateTime.Now;
+            DateTime? value2b = new DateTime(((DateTime)value2a).Ticks, ((DateTime)value2a).Kind);
+
+            DateTime? value3a = new DateTime(1345342, DateTimeKind.Unspecified);
+            DateTime? value3b = new DateTime(((DateTime)value3a).Ticks, ((DateTime)value3a).Kind);
+
+            DateTime? value4a = null;
+            DateTime? value4b = null;
+
+            var expected1 = HashCodeHelper.Initialize().Hash(value1a).Value;
+            var expected2 = HashCodeHelper.Initialize().Hash(value2a).Value;
+            var expected3 = HashCodeHelper.Initialize().Hash(value3a).Value;
+            var expected4 = HashCodeHelper.Initialize().Hash(value4a).Value;
+
+            // Act
+            var actual1 = HashCodeHelper.Initialize().Hash(value1b).Value;
+            var actual2 = HashCodeHelper.Initialize().Hash(value2b).Value;
+            var actual3 = HashCodeHelper.Initialize().Hash(value3b).Value;
+            var actual4 = HashCodeHelper.Initialize().Hash(value4b).Value;
+
+            // Assert
+            actual1.Should().Be(expected1);
+            actual2.Should().Be(expected2);
+            actual3.Should().Be(expected3);
+            actual4.Should().Be(expected4);
+        }
+
+        [Fact]
         public static void Hash___Should_return_different_hash_codes___When_the_items_are_multiple_level_data_structures_that_are_not_equal()
         {
             // Arrange
