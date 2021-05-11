@@ -27,7 +27,7 @@ namespace OBeautifulCode.Equality.Recipes
 #endif
     static class EqualityComparerHelper
     {
-        private static readonly ConcurrentDictionary<Type, object> TypeToEqualityComparerMap = new ConcurrentDictionary<Type, object>();
+        private static readonly ConcurrentDictionary<Type, object> CachedTypeToEqualityComparerMap = new ConcurrentDictionary<Type, object>();
 
         /// <summary>
         /// Gets the equality comparer to use for the specified type.
@@ -47,7 +47,7 @@ namespace OBeautifulCode.Equality.Recipes
                 return comparer;
             }
             
-            if (TypeToEqualityComparerMap.TryGetValue(type, out object cachedResult))
+            if (CachedTypeToEqualityComparerMap.TryGetValue(type, out object cachedResult))
             {
                 return (IEqualityComparer<T>)cachedResult;
             }
@@ -108,7 +108,7 @@ namespace OBeautifulCode.Equality.Recipes
                 result = EqualityComparer<T>.Default;
             }
 
-            TypeToEqualityComparerMap.TryAdd(type, result);
+            CachedTypeToEqualityComparerMap.TryAdd(type, result);
 
             return result;
         }
