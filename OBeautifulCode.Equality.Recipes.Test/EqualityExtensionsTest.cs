@@ -68,19 +68,14 @@ namespace OBeautifulCode.Equality.Recipes.Test
         public static void IsEqualTo___Should_return_false___When_objects_are_not_equal()
         {
             // Arrange
-            var item1a = new object();
-            var item1b = new object();
-
-            var item2a = "asdf";
-            var item2b = "ASDF";
+            var item1 = "asdf";
+            var item2 = "ASDF";
 
             // Act
-            var actual1 = item1a.IsEqualTo(item1b);
-            var actual2 = item2a.IsEqualTo(item2b);
+            var actual = item1.IsEqualTo(item2);
 
             // Assert
-            actual1.Should().BeFalse();
-            actual2.Should().BeFalse();
+            actual.Should().BeFalse();
         }
 
         [Fact]
@@ -109,6 +104,64 @@ namespace OBeautifulCode.Equality.Recipes.Test
 
             // Assert
             actual1.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_false___When_objects_have_different_runtime_types()
+        {
+            // Arrange
+            object item1 = Some.Dummies<byte>().ToArray();
+            object item2 = new object();
+
+            // Act
+            var actual1 = item1.IsEqualTo(item2);
+            var actual2 = item2.IsEqualTo(item1);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_objects_runtime_types_are_object()
+        {
+            // Arrange
+            var item1 = new object();
+            var item2 = new object();
+
+            // Act
+            var actual = item1.IsEqualTo(item2);
+
+            // Assert
+            actual.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_objects_are_equal_using_runtime_types_as_declared_type()
+        {
+            // Arrange
+            object item1 = new List<string> { "abc", null, "def" };
+            object item2 = new List<string> { "abc", null, "def" };
+
+            // Act
+            var actual = item1.IsEqualTo(item2);
+
+            // Assert
+            actual.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_objects_are_not_equal_using_runtime_types_as_declared_type()
+        {
+            // Arrange
+            object item1 = new List<string> { "abc", null, "def" };
+            object item2 = new List<string> { "abc", null };
+
+            // Act
+            var actual = item1.IsEqualTo(item2);
+
+            // Assert
+            actual.Should().BeFalse();
         }
 
         [Fact]

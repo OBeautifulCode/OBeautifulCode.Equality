@@ -54,7 +54,11 @@ namespace OBeautifulCode.Equality.Recipes
 
             IEqualityComparer<T> result;
 
-            if (type.IsClosedSystemDictionaryType())
+            if (type == typeof(object))
+            {
+                result = (IEqualityComparer<T>)new ObjectEqualityComparer();
+            }
+            else if (type.IsClosedSystemDictionaryType())
             {
                 // IDictionary is the only System dictionary type that doesn't implement IReadOnlyDictionary
                 // which is why we have to special-case it here.

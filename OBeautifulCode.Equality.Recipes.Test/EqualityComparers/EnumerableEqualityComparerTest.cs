@@ -207,7 +207,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
             var item = new[] { "abc", null, "def" };
 
             // Act
-            var actual = systemUnderTest.Equals(item);
+            var actual = systemUnderTest.Equals(item, item);
 
             // Assert
             actual.Should().BeTrue();
