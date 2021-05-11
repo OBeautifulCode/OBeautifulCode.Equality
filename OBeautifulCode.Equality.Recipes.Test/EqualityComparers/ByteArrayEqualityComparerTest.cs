@@ -43,12 +43,12 @@ namespace OBeautifulCode.Equality.Recipes.Test
             var systemUnderTest = new ByteArrayEqualityComparer();
 
             // Act
-            var result1 = systemUnderTest.Equals(byteArray1, byteArray2);
-            var result2 = systemUnderTest.Equals(byteArray2, byteArray1);
+            var actual1 = systemUnderTest.Equals(byteArray1, byteArray2);
+            var actual2 = systemUnderTest.Equals(byteArray2, byteArray1);
 
             // Assert
-            result1.Should().BeFalse();
-            result2.Should().BeFalse();
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
         }
 
         [Fact]
@@ -59,10 +59,10 @@ namespace OBeautifulCode.Equality.Recipes.Test
             var systemUnderTest = new ByteArrayEqualityComparer();
 
             // Act
-            var result = systemUnderTest.Equals(byteArray, byteArray);
+            var actual = systemUnderTest.Equals(byteArray, byteArray);
 
             // Assert
-            result.Should().BeTrue();
+            actual.Should().BeTrue();
         }
 
         [Fact]
@@ -81,14 +81,14 @@ namespace OBeautifulCode.Equality.Recipes.Test
             var systemUnderTest = new ByteArrayEqualityComparer();
 
             // Act
-            var result1 = systemUnderTest.Equals(byteArray1a, byteArray1b);
-            var result2 = systemUnderTest.Equals(byteArray2a, byteArray2b);
-            var result3 = systemUnderTest.Equals(byteArray3a, byteArray3b);
+            var actual1 = systemUnderTest.Equals(byteArray1a, byteArray1b);
+            var actual2 = systemUnderTest.Equals(byteArray2a, byteArray2b);
+            var actual3 = systemUnderTest.Equals(byteArray3a, byteArray3b);
 
             // Assert
-            result1.Should().BeFalse();
-            result2.Should().BeFalse();
-            result3.Should().BeFalse();
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+            actual3.Should().BeFalse();
         }
 
         [Fact]
@@ -102,10 +102,10 @@ namespace OBeautifulCode.Equality.Recipes.Test
             var systemUnderTest = new ByteArrayEqualityComparer();
 
             // Act
-            var result = systemUnderTest.Equals(byteArray1, byteArray2);
+            var actual = systemUnderTest.Equals(byteArray1, byteArray2);
 
             // Assert
-            result.Should().BeTrue();
+            actual.Should().BeTrue();
         }
 
         [Fact]
@@ -128,8 +128,8 @@ namespace OBeautifulCode.Equality.Recipes.Test
             var systemUnderTest = new ByteArrayEqualityComparer();
 
             // Act
-            var hash1 = Record.Exception(() => systemUnderTest.GetHashCode(null));
-            var hash2 = Record.Exception(() => systemUnderTest.GetHashCode(null));
+            var hash1 = systemUnderTest.GetHashCode(null);
+            var hash2 = systemUnderTest.GetHashCode(null);
 
             // Assert
             hash1.Should().Be(hash2);

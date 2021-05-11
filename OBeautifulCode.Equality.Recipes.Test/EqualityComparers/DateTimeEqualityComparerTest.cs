@@ -80,5 +80,84 @@ namespace OBeautifulCode.Equality.Recipes.Test
             actual2.Should().BeFalse();
             actual3.Should().BeFalse();
         }
+
+        [Fact]
+        public static void GetHashCode___Should_return_same_hash_code___When_called_twice_on_same_object_reference()
+        {
+            // Arrange
+            var dateTime = DateTime.UtcNow;
+            var systemUnderTest = new DateTimeEqualityComparer();
+
+            // Act
+            var hash1 = systemUnderTest.GetHashCode(dateTime);
+            var hash2 = systemUnderTest.GetHashCode(dateTime);
+
+            // Assert
+            hash1.Should().Be(hash2);
+        }
+
+        [Fact]
+        public static void GetHashCode___Should_return_different_hash_code___For_different_DateTime_objects()
+        {
+            // Arrange
+            var item1a = DateTime.UtcNow;
+            var item1b = item1a.AddTicks(1);
+
+            var item2a = DateTime.Now;
+            var item2b = item2a.AddTicks(1);
+
+            var item3a = new DateTime(DateTime.UtcNow.Ticks, DateTimeKind.Unspecified);
+            var item3b = item3a.AddTicks(1);
+
+            var item4a = DateTime.UtcNow;
+            var item4b = new DateTime(item4a.Ticks, DateTimeKind.Local);
+
+            var item5a = DateTime.UtcNow;
+            var item5b = new DateTime(item5a.Ticks, DateTimeKind.Unspecified);
+
+            var item6a = DateTime.Now;
+            var item6b = new DateTime(item6a.Ticks, DateTimeKind.Unspecified);
+
+            var systemUnderTest = new DateTimeEqualityComparer();
+
+            // Act
+            var hash1a = systemUnderTest.GetHashCode(item1a);
+            var hash1b = systemUnderTest.GetHashCode(item1b);
+            var hash2a = systemUnderTest.GetHashCode(item2a);
+            var hash2b = systemUnderTest.GetHashCode(item2b);
+            var hash3a = systemUnderTest.GetHashCode(item3a);
+            var hash3b = systemUnderTest.GetHashCode(item3b);
+            var hash4a = systemUnderTest.GetHashCode(item4a);
+            var hash4b = systemUnderTest.GetHashCode(item4b);
+            var hash5a = systemUnderTest.GetHashCode(item5a);
+            var hash5b = systemUnderTest.GetHashCode(item5b);
+            var hash6a = systemUnderTest.GetHashCode(item6a);
+            var hash6b = systemUnderTest.GetHashCode(item6b);
+
+            // Assert
+            hash1a.Should().NotBe(hash1b);
+            hash2a.Should().NotBe(hash2b);
+            hash3a.Should().NotBe(hash3b);
+            hash4a.Should().NotBe(hash4b);
+            hash5a.Should().NotBe(hash5b);
+            hash6a.Should().NotBe(hash6b);
+        }
+
+        [Fact]
+        public static void GetHashCode___Should_return_same_hash_code___For_DateTime_objects_that_are_equal()
+        {
+            // Arrange
+            var item1 = DateTime.UtcNow;
+            var item2 = new DateTime(item1.Ticks, item1.Kind);
+
+            var systemUnderTest = new DateTimeEqualityComparer();
+
+            // Act
+            var hash1 = systemUnderTest.GetHashCode(item1);
+            var hash2 = systemUnderTest.GetHashCode(item2);
+
+            // Assert
+            hash1.Should().Be(hash2);
+        }
     }
 }
