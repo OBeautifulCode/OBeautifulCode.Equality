@@ -92,6 +92,20 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
+        public static void Equals___Should_return_true___When_enumerableEqualityComparerStrategy_is_SequenceEqual_and_item1_and_item2_are_the_same_reference()
+        {
+            // Arrange
+            var systemUnderTest = new EnumerableEqualityComparer<string>(EnumerableEqualityComparerStrategy.SequenceEqual);
+            var item = new[] { "abc", null, "def" };
+
+            // Act
+            var actual = systemUnderTest.Equals(item, item);
+
+            // Assert
+            actual.Should().BeTrue();
+        }
+
+        [Fact]
         public static void Equals___Should_return_true___When_enumerableEqualityComparerStrategy_is_SequenceEqual_and_item1_and_item2_are_empty()
         {
             // Arrange
@@ -182,6 +196,21 @@ namespace OBeautifulCode.Equality.Recipes.Test
             // Assert
             actual1.Should().BeTrue();
             actual2.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void Equals___Should_return_true___When_enumerableEqualityComparerStrategy_is_UnorderedEqual_and_item1_and_item2_are_the_same_reference()
+        {
+            // Arrange
+            var systemUnderTest = new EnumerableEqualityComparer<string>(EnumerableEqualityComparerStrategy.UnorderedEqual);
+
+            var item = new[] { "abc", null, "def" };
+
+            // Act
+            var actual = systemUnderTest.Equals(item);
+
+            // Assert
+            actual.Should().BeTrue();
         }
 
         [Fact]
