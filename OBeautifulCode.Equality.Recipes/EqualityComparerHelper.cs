@@ -99,6 +99,10 @@ namespace OBeautifulCode.Equality.Recipes
             {
                 result = (IEqualityComparer<T>)new DateTimeEqualityComparer();
             }
+            else if (type == typeof(DateTime?))
+            {
+                result = (IEqualityComparer<T>)new NullableDateTimeEqualityComparer();
+            }
             else
             {
                 result = EqualityComparer<T>.Default;

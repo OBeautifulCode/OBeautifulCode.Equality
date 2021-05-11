@@ -50,6 +50,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="EqualityComparerHelper.cs" />
+    <Compile Include="EqualityComparers\NullableDateTimeEqualityComparer.cs" />
     <Compile Include="EqualityComparers\LambdaBackedEqualityComparer.cs" />
     <Compile Include="EqualityComparers\NativeMethods.cs" />
     <Compile Include="EqualityComparers\ByteArrayEqualityComparer.cs" />

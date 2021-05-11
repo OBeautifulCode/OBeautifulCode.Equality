@@ -803,6 +803,57 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
+        public static void IsEqualTo___Should_return_false___When_two_Nullable_DateTime_objects_with_the_same_Ticks_have_a_different_Kind()
+        {
+            // Arrange
+            var referenceTime = DateTime.Now;
+
+            DateTime? item1 = new DateTime(referenceTime.Ticks, DateTimeKind.Utc);
+            DateTime item2 = new DateTime(referenceTime.Ticks, DateTimeKind.Local);
+            DateTime item3 = new DateTime(referenceTime.Ticks, DateTimeKind.Unspecified);
+
+            // Act
+            var actual1 = item1.IsEqualTo(item2);
+            var actual2 = item1.IsEqualTo(item3);
+            var actual3 = item2.IsEqualTo(item3);
+
+            // Assert
+            // first assert that these are considered equal by .NET
+            item1.Should().Be(item2);
+            item1.Should().Be(item3);
+            item2.Should().Be(item3);
+
+            // now assert that our methods considers them NOT equal
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+            actual3.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_two_Nullable_DateTime_objects_having_the_same_Ticks_have_the_same_Kind()
+        {
+            // Arrange
+            DateTime? item1a = DateTime.UtcNow;
+            DateTime? item1b = ((DateTime)item1a).AddMilliseconds(0d);
+
+            DateTime? item2a = DateTime.Now;
+            DateTime? item2b = ((DateTime)item2a).AddMilliseconds(0d);
+
+            DateTime? item3a = new DateTime(DateTime.Now.Ticks, DateTimeKind.Unspecified);
+            DateTime? item3b = ((DateTime)item3a).AddMilliseconds(0d);
+
+            // Act
+            var actual1 = item1a.IsEqualTo(item1b);
+            var actual2 = item2a.IsEqualTo(item2b);
+            var actual3 = item3a.IsEqualTo(item3b);
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
+            actual3.Should().BeTrue();
+        }
+
+        [Fact]
         public static void IsDictionaryEqualTo___Should_return_true___When_both_dictionaries_are_null()
         {
             // Arrange
