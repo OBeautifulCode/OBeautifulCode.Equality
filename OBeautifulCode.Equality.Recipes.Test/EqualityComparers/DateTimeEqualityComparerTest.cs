@@ -15,7 +15,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
     public static class DateTimeEqualityComparerTest
     {
         [Fact]
-        public static void Equals___Should_return_true___When_item1_and_item2_have_the_same_Ticks_and_same_Kind()
+        public static void Equals___Should_return_true___When_both_items_are_the_same_object_reference()
         {
             // Arrange
             var systemUnderTest = new DateTimeEqualityComparer();
@@ -28,6 +28,32 @@ namespace OBeautifulCode.Equality.Recipes.Test
             var actual1 = systemUnderTest.Equals(utcDateTime, utcDateTime);
             var actual2 = systemUnderTest.Equals(localDateTime, localDateTime);
             var actual3 = systemUnderTest.Equals(unspecifiedDateTime, unspecifiedDateTime);
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
+            actual3.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void Equals___Should_return_true___When_item1_and_item2_have_the_same_Ticks_and_same_Kind()
+        {
+            // Arrange
+            var systemUnderTest = new DateTimeEqualityComparer();
+
+            var item1a = DateTime.UtcNow;
+            var item1b = new DateTime(item1a.Ticks, item1a.Kind);
+
+            var item2a = DateTime.Now;
+            var item2b = new DateTime(item2a.Ticks, item2a.Kind);
+
+            var item3a = new DateTime(DateTime.UtcNow.Ticks, DateTimeKind.Unspecified);
+            var item3b = new DateTime(item3a.Ticks, item3a.Kind);
+
+            // Act
+            var actual1 = systemUnderTest.Equals(item1a, item1b);
+            var actual2 = systemUnderTest.Equals(item2a, item2b);
+            var actual3 = systemUnderTest.Equals(item3a, item3b);
 
             // Assert
             actual1.Should().BeTrue();
