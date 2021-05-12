@@ -1329,7 +1329,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
             actual1a.Should().Be(actual1b);
         }
 
-        [Fact(Skip = "In this case, the keys in in the top-level Dictionary are declared as typeof(object) and are thus not sortable and so we just hash the element account and do not actually hash the keys and values.  We cannot use the runtime types because we don't know ahead-of-time that they are the same runtime type.  As such, the two objects have the same hash code, which is ok because that doesn't break the contract of hashing, it's just not desirable."]
+        [Fact(Skip = "In this case, the keys in in the top-level Dictionary are declared as typeof(object) and are thus not sortable and so we just hash the element account and do not actually hash the keys and values.  We cannot use the runtime types because we don't know ahead-of-time that they are the same runtime type.  As such, the two objects have the same hash code, which is ok because that doesn't break the contract of hashing, it's just not desirable.")]
         public static void Hash___Should_return_different_hash_codes___When_the_items_are_multiple_level_data_structures_where_all_types_are_declared_as_type_object_that_are_not_equal()
         {
             // Arrange
