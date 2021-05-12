@@ -48,6 +48,10 @@ namespace OBeautifulCode.Equality.Recipes
         /// </summary>
         private const int HashCodeInitializer = 17;
 
+        private const int ObjectHashCode = 48611003;
+
+        private static readonly MethodInfo HashGenericMethodInfo = typeof(HashCodeHelper).GetMethod(nameof(Hash), BindingFlags.Public | BindingFlags.Instance);
+
         private static readonly MethodInfo HashDictionaryGenericMethodInfo = typeof(HashCodeHelper).GetMethod(nameof(HashDictionary), BindingFlags.NonPublic | BindingFlags.Instance);
 
         private static readonly MethodInfo HashReadOnlyDictionaryGenericMethodInfo = typeof(HashCodeHelper).GetMethod(nameof(HashReadOnlyDictionary), BindingFlags.NonPublic | BindingFlags.Instance);
@@ -99,34 +103,57 @@ namespace OBeautifulCode.Equality.Recipes
 
                 var declaredType = typeof(T);
 
-                if (declaredType.IsClosedSystemDictionaryType())
+                var runtimeType = item?.GetType();
+
+                if ((declaredType == typeof(object)) && (runtimeType != null))
+                {
+                    // If the declared type is object and item is not null
+                    // (if it's null then it will will eventually hit the else statement at the bottom,
+                    // either in this pass, or thru HashDictionary(), etc. which will come back thru
+                    // the front door using Hash<object>(null)
+                    if (runtimeType == typeof(object))
+                    {
+                        // new object().GetHashCode() != new object().GetHashCode() so we need to solve for that here.
+                        var hashCode = this.Value;
+
+                        hashCode = (hashCode * HashCodeMultiplier) + ObjectHashCode;
+
+                        result = new HashCodeHelper(hashCode);
+                    }
+                    else
+                    {
+                        // Use the runtime type as the declared type and come back thru the front door.
+                        result = (HashCodeHelper)HashGenericMethodInfo.MakeGenericMethod(runtimeType).Invoke(this, new object[] { item });
+                    }
+                }
+                else if (declaredType.IsClosedSystemDictionaryType())
                 {
                     var methodInfo = declaredType.GetGenericTypeDefinition() == typeof(IDictionary<,>)
                         ? HashDictionaryGenericMethodInfo
                         : HashReadOnlyDictionaryGenericMethodInfo;
 
-                    result = (HashCodeHelper)methodInfo.MakeGenericMethod(declaredType.GenericTypeArguments).Invoke(this, new[] { (object)item });
+                    result = (HashCodeHelper)methodInfo.MakeGenericMethod(declaredType.GenericTypeArguments).Invoke(this, new object[] { item });
                 }
                 else if (declaredType.IsClosedSystemCollectionType())
                 {
                     if (declaredType.IsClosedSystemOrderedCollectionType())
                     {
-                        result = (HashCodeHelper)HashOrderedCollectionGenericMethodInfo.MakeGenericMethod(declaredType.GenericTypeArguments).Invoke(this, new[] { (object)item });
+                        result = (HashCodeHelper)HashOrderedCollectionGenericMethodInfo.MakeGenericMethod(declaredType.GenericTypeArguments).Invoke(this, new object[] { item });
                     }
                     else
                     {
-                        result = (HashCodeHelper)HashUnorderedCollectionGenericMethodInfo.MakeGenericMethod(declaredType.GenericTypeArguments).Invoke(this, new[] { (object)item });
+                        result = (HashCodeHelper)HashUnorderedCollectionGenericMethodInfo.MakeGenericMethod(declaredType.GenericTypeArguments).Invoke(this, new object[] { item });
                     }
                 }
                 else if (declaredType.IsArray)
                 {
                     var genericArguments = declaredType.GetElementType();
 
-                    result = (HashCodeHelper)HashOrderedCollectionGenericMethodInfo.MakeGenericMethod(genericArguments).Invoke(this, new[] { (object)item });
+                    result = (HashCodeHelper)HashOrderedCollectionGenericMethodInfo.MakeGenericMethod(genericArguments).Invoke(this, new object[] { item });
                 }
                 else if (declaredType.IsClosedSystemEnumerableType())
                 {
-                    result = (HashCodeHelper)HashUnorderedCollectionGenericMethodInfo.MakeGenericMethod(declaredType.GenericTypeArguments).Invoke(this, new[] { (object)item });
+                    result = (HashCodeHelper)HashUnorderedCollectionGenericMethodInfo.MakeGenericMethod(declaredType.GenericTypeArguments).Invoke(this, new object[] { item });
                 }
                 else if ((declaredType == typeof(DateTime)) || (declaredType == typeof(DateTime?)))
                 {

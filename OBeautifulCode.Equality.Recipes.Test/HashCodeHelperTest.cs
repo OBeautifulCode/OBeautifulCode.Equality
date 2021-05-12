@@ -110,81 +110,121 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void Hash___Should_return_nonzero_hash_code___When_parameter_item_is_a_null_object()
+        public static void Hash___Should_return_same_nonzero_hash_code___When_parameter_item_is_a_null_object()
         {
             // Arrange
-            double? value = null;
+            double? value1 = null;
+            object value2 = null;
 
             // Act
-            var actual = HashCodeHelper.Initialize().Hash(value).Value;
+            var actual1a = HashCodeHelper.Initialize().Hash(value1).Value;
+            var actual1b = HashCodeHelper.Initialize().Hash(value1).Value;
+
+            var actual2a = HashCodeHelper.Initialize().Hash(value2).Value;
+            var actual2b = HashCodeHelper.Initialize().Hash(value2).Value;
 
             // Assert
-            actual.Should().NotBe(0);
+            actual1a.Should().NotBe(0);
+            actual1a.Should().Be(actual1b);
+
+            actual2a.Should().NotBe(0);
+            actual2a.Should().Be(actual2b);
         }
 
         [Fact]
-        public static void Hash___Should_return_nonzero_hash_code___When_parameter_item_is_a_null_array()
+        public static void Hash___Should_return_same_nonzero_hash_code___When_parameter_item_is_a_null_array()
         {
             // Arrange
-            double[] values = null;
+            double[] values1 = null;
+            double[] values2 = null;
 
             // Act
-            var actual = HashCodeHelper.Initialize().Hash(values);
+            var actual1 = HashCodeHelper.Initialize().Hash(values1).Value;
+            var actual2 = HashCodeHelper.Initialize().Hash(values2).Value;
 
             // Assert
-            actual.Should().NotBe(0);
+            actual1.Should().NotBe(0);
+            actual1.Should().Be(actual2);
         }
 
         [Fact]
-        public static void Hash___Should_return_nonzero_hash_code___When_parameter_item_is_a_null_ordered_collection()
+        public static void Hash___Should_return_same_nonzero_hash_code___When_parameter_item_is_a_null_ordered_collection()
         {
             // Arrange
-            IReadOnlyList<double> values = null;
+            IReadOnlyList<double> values1 = null;
+            IReadOnlyList<double> values2 = null;
 
             // Act
-            var actual = HashCodeHelper.Initialize().Hash(values);
+            var actual1 = HashCodeHelper.Initialize().Hash(values1).Value;
+            var actual2 = HashCodeHelper.Initialize().Hash(values2).Value;
 
             // Assert
-            actual.Should().NotBe(0);
+            actual1.Should().NotBe(0);
+            actual1.Should().Be(actual2);
         }
 
         [Fact]
-        public static void Hash___Should_return_nonzero_hash_code___When_parameter_item_is_a_null_unordered_collection()
+        public static void Hash___Should_return_same_nonzero_hash_code___When_parameter_item_is_a_null_unordered_collection()
         {
             // Arrange
-            Collection<double> values = null;
+            Collection<double> values1 = null;
+            Collection<double> values2 = null;
 
             // Act
-            var actual = HashCodeHelper.Initialize().Hash(values);
+            var actual1 = HashCodeHelper.Initialize().Hash(values1).Value;
+            var actual2 = HashCodeHelper.Initialize().Hash(values2).Value;
 
             // Assert
-            actual.Should().NotBe(0);
+            actual1.Should().NotBe(0);
+            actual1.Should().Be(actual2);
         }
 
         [Fact]
-        public static void Hash___Should_return_nonzero_hash_code___When_parameter_item_is_a_null_dictionary()
+        public static void Hash___Should_return_same_nonzero_hash_code___When_parameter_item_is_a_null_dictionary()
         {
             // Arrange
-            IDictionary<string, string> values = null;
+            IDictionary<string, string> values1 = null;
+            IDictionary<string, string> values2 = null;
 
             // Act
-            var actual = HashCodeHelper.Initialize().Hash(values);
+            var actual1 = HashCodeHelper.Initialize().Hash(values1).Value;
+            var actual2 = HashCodeHelper.Initialize().Hash(values2).Value;
 
             // Assert
-            actual.Should().NotBe(0);
+            actual1.Should().NotBe(0);
+            actual1.Should().Be(actual2);
         }
 
         [Fact]
-        public static void Hash___Should_return_nonzero_hash_code___When_parameter_item_is_a_null_read_only_dictionary()
+        public static void Hash___Should_return_same_nonzero_hash_code___When_parameter_item_is_a_null_read_only_dictionary()
         {
             // Arrange
-            ReadOnlyDictionary<string, string> values = null;
+            ReadOnlyDictionary<string, string> values1 = null;
+            ReadOnlyDictionary<string, string> values2 = null;
 
             // Act
-            var actual = HashCodeHelper.Initialize().Hash(values);
+            var actual1 = HashCodeHelper.Initialize().Hash(values1).Value;
+            var actual2 = HashCodeHelper.Initialize().Hash(values2).Value;
 
             // Assert
-            actual.Should().NotBe(0);
+            actual1.Should().NotBe(0);
+            actual1.Should().Be(actual2);
+        }
+
+        [Fact]
+        public static void Hash___Should_return_same_nonzero_hash_code___When_parameter_item_is_a_null_Nullable_DateTime_dictionary()
+        {
+            // Arrange
+            DateTime? values1 = null;
+            DateTime? values2 = null;
+
+            // Act
+            var actual1 = HashCodeHelper.Initialize().Hash(values1).Value;
+            var actual2 = HashCodeHelper.Initialize().Hash(values2).Value;
+
+            // Assert
+            actual1.Should().NotBe(0);
+            actual1.Should().Be(actual2);
         }
 
         [Fact]
@@ -268,6 +308,21 @@ namespace OBeautifulCode.Equality.Recipes.Test
 
             // Assert
             actual1.Should().Be(expected1);
+        }
+
+        [Fact]
+        public static void Hash___Should_return_same_hash_code___When_the_items_are_of_runtime_type_object_but_not_the_same_reference()
+        {
+            // Arrange
+            var value1 = new object();
+            var value2 = new object();
+
+            // Act
+            var actual1 = HashCodeHelper.Initialize().Hash(value1).Value;
+            var actual2 = HashCodeHelper.Initialize().Hash(value2).Value;
+
+            // Assert
+            actual1.Should().Be(actual2);
         }
 
         [Fact]
@@ -1108,6 +1163,312 @@ namespace OBeautifulCode.Equality.Recipes.Test
                     {
                         new List<string> { "7", "6" },
                         new List<string> { "9", "8" },
+                        null,
+                    }
+                },
+            };
+
+            // Act
+            var actual1a = HashCodeHelper.Initialize().Hash(item1a).Value;
+            var actual1b = HashCodeHelper.Initialize().Hash(item1b).Value;
+
+            // Assert
+            actual1a.Should().Be(actual1b);
+        }
+
+        [Fact]
+        public static void Hash___Should_return_different_hash_codes___When_the_items_are_multiple_level_data_structures_declared_as_type_object_that_are_not_equal()
+        {
+            // Arrange
+            object item1a = new Dictionary<string, IReadOnlyList<IReadOnlyCollection<string>>>
+            {
+                {
+                    "abc",
+                    new IReadOnlyCollection<string>[]
+                    {
+                        new List<string> { "1", "2", null, "3" },
+                        null,
+                        new List<string> { null, null, "4", "5" },
+                    }
+                },
+                {
+                    "def",
+                    null
+                },
+                {
+                    "ghi",
+                    new List<IReadOnlyCollection<string>>
+                    {
+                        new List<string> { "6", "7" },
+                        new List<string> { "8", "9" },
+                        null,
+                    }
+                },
+                {
+                    "jkl",
+                    new List<IReadOnlyCollection<string>>
+                    {
+                    }
+                },
+            };
+
+            object item1b = new Dictionary<string, IReadOnlyList<IReadOnlyCollection<string>>>
+            {
+                {
+                    "abc",
+                    new IReadOnlyCollection<string>[]
+                    {
+                        new List<string> { "1", "2", null, "3" },
+                        null,
+                        new List<string> { null, null, "4", "5" },
+                    }
+                },
+                {
+                    "def",
+                    null
+                },
+                {
+                    "ghi",
+                    new List<IReadOnlyCollection<string>>
+                    {
+                        new List<string> { "6", "7" },
+                        new List<string> { "8", "9" },
+                        null,
+                    }
+                },
+                {
+                    "jkl",
+                    new List<IReadOnlyCollection<string>>
+                    {
+                        null,
+                    }
+                },
+            };
+
+            // Act
+            var actual1a = HashCodeHelper.Initialize().Hash(item1a).Value;
+            var actual1b = HashCodeHelper.Initialize().Hash(item1b).Value;
+
+            // Assert
+            actual1a.Should().NotBe(actual1b);
+        }
+
+        [Fact]
+        public static void Hash___Should_return_the_same_hash_code___When_the_items_are_multiple_level_data_structures_declared_as_type_object_that_are_equal()
+        {
+            // Arrange
+            object item1a = new Dictionary<string, IReadOnlyList<IReadOnlyCollection<string>>>
+            {
+                {
+                    "abc",
+                    new IReadOnlyCollection<string>[]
+                    {
+                        new List<string> { "1", "2", null, "3" },
+                        null,
+                        new List<string> { null, null, "4", "5" },
+                    }
+                },
+                {
+                    "def",
+                    null
+                },
+                {
+                    "ghi",
+                    new List<IReadOnlyCollection<string>>
+                    {
+                        new List<string> { "6", "7" },
+                        new List<string> { "8", "9" },
+                        null,
+                    }
+                },
+                {
+                    "jkl",
+                    new List<IReadOnlyCollection<string>>
+                    {
+                    }
+                },
+            };
+
+            object item1b = new Dictionary<string, IReadOnlyList<IReadOnlyCollection<string>>>
+            {
+                {
+                    "jkl",
+                    new List<IReadOnlyCollection<string>>
+                    {
+                    }
+                },
+                {
+                    "def",
+                    null
+                },
+                {
+                    "abc",
+                    new IReadOnlyCollection<string>[]
+                    {
+                        new List<string> { "1", "3", "2", null, },
+                        null,
+                        new List<string> { "4", null, null, "5" },
+                    }
+                },
+                {
+                    "ghi",
+                    new List<IReadOnlyCollection<string>>
+                    {
+                        new List<string> { "7", "6" },
+                        new List<string> { "9", "8" },
+                        null,
+                    }
+                },
+            };
+
+            // Act
+            var actual1a = HashCodeHelper.Initialize().Hash(item1a).Value;
+            var actual1b = HashCodeHelper.Initialize().Hash(item1b).Value;
+
+            // Assert
+            actual1a.Should().Be(actual1b);
+        }
+
+        [Fact(Skip = "In this case, the keys in in the top-level Dictionary are declared as typeof(object) and are thus not sortable and so we just hash the element account and do not actually hash the keys and values.  We cannot use the runtime types because we don't know ahead-of-time that they are the same runtime type.  As such, the two objects have the same hash code, which is ok because that doesn't break the contract of hashing, it's just not desirable."]
+        public static void Hash___Should_return_different_hash_codes___When_the_items_are_multiple_level_data_structures_where_all_types_are_declared_as_type_object_that_are_not_equal()
+        {
+            // Arrange
+            object item1a = new Dictionary<object, IReadOnlyList<IReadOnlyCollection<object>>>
+            {
+                {
+                    "abc",
+                    new IReadOnlyCollection<object>[]
+                    {
+                        new List<object> { "1", "2", null, "3" },
+                        null,
+                        new List<object> { null, null, "4", "5" },
+                    }
+                },
+                {
+                    "def",
+                    null
+                },
+                {
+                    "ghi",
+                    new List<IReadOnlyCollection<object>>
+                    {
+                        new List<object> { "6", "7" },
+                        new List<object> { "8", "9" },
+                        null,
+                    }
+                },
+                {
+                    "jkl",
+                    new List<IReadOnlyCollection<object>>
+                    {
+                    }
+                },
+            };
+
+            object item1b = new Dictionary<object, IReadOnlyList<IReadOnlyCollection<object>>>
+            {
+                {
+                    "abc",
+                    new IReadOnlyCollection<object>[]
+                    {
+                        new List<object> { "1", "2", null, "3" },
+                        null,
+                        new List<object> { null, null, "4", "5" },
+                    }
+                },
+                {
+                    "def",
+                    null
+                },
+                {
+                    "ghi",
+                    new List<IReadOnlyCollection<object>>
+                    {
+                        new List<object> { "6", "7" },
+                        new List<object> { "8", "9" },
+                        null,
+                    }
+                },
+                {
+                    "jkl",
+                    new List<IReadOnlyCollection<object>>
+                    {
+                        null,
+                    }
+                },
+            };
+
+            // Act
+            var actual1a = HashCodeHelper.Initialize().Hash(item1a).Value;
+            var actual1b = HashCodeHelper.Initialize().Hash(item1b).Value;
+
+            // Assert
+            actual1a.Should().NotBe(actual1b);
+        }
+
+        [Fact]
+        public static void Hash___Should_return_the_same_hash_code___When_the_items_are_multiple_level_data_structures_where_all_types_are_declared_as_type_object_that_are_equal()
+        {
+            // Arrange
+            object item1a = new Dictionary<object, IReadOnlyList<IReadOnlyCollection<object>>>
+            {
+                {
+                    "abc",
+                    new IReadOnlyCollection<object>[]
+                    {
+                        new List<object> { "1", "2", null, "3" },
+                        null,
+                        new List<object> { null, null, "4", "5" },
+                    }
+                },
+                {
+                    "def",
+                    null
+                },
+                {
+                    "ghi",
+                    new List<IReadOnlyCollection<object>>
+                    {
+                        new List<object> { "6", "7" },
+                        new List<object> { "8", "9" },
+                        null,
+                    }
+                },
+                {
+                    "jkl",
+                    new List<IReadOnlyCollection<object>>
+                    {
+                    }
+                },
+            };
+
+            object item1b = new Dictionary<object, IReadOnlyList<IReadOnlyCollection<object>>>
+            {
+                {
+                    "jkl",
+                    new List<IReadOnlyCollection<object>>
+                    {
+                    }
+                },
+                {
+                    "def",
+                    null
+                },
+                {
+                    "abc",
+                    new IReadOnlyCollection<object>[]
+                    {
+                        new List<object> { "1", "3", "2", null, },
+                        null,
+                        new List<object> { "4", null, null, "5" },
+                    }
+                },
+                {
+                    "ghi",
+                    new List<IReadOnlyCollection<object>>
+                    {
+                        new List<object> { "7", "6" },
+                        new List<object> { "9", "8" },
                         null,
                     }
                 },
