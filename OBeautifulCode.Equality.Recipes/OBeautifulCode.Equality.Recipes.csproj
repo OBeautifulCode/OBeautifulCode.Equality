@@ -67,6 +67,7 @@
   <ItemGroup>
     <AdditionalFiles Include=".analyzers\stylecop.json" />
     <None Include=".analyzers\release.ruleset" />
+    <None Include="EqualityHelpersForUseInTypeAssemblyOnly.recipe-nuspec" />
     <None Include="EqualityHelpers.recipe-nuspec" />
     <None Include="nuget-icon.png" />
     <None Include="packages.config" />
