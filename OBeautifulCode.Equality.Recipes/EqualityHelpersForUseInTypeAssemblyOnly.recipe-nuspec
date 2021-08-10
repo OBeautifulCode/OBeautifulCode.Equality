@@ -23,5 +23,6 @@
     <file src="EqualityComparers\NativeMethods.cs" target="content\net462\.recipes\OBeautifulCode.Equality\NativeMethods.cs" />
     <file src="EqualityComparers\NullableDateTimeEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\NullableDateTimeEqualityComparer.cs" />
     <file src="EqualityComparers\ReadOnlyDictionaryEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
+    <file src="EqualityComparers\ReferenceEqualityComparer{T}.cs" target="content\net462\.recipes\OBeautifulCode.Equality\ReferenceEqualityComparer{T}.cs" />
   </files>
 </package>
