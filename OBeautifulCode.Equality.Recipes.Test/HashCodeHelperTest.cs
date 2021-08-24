@@ -9,6 +9,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Drawing;
     using System.Linq;
 
     using FakeItEasy;
@@ -212,11 +213,27 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
-        public static void Hash___Should_return_same_nonzero_hash_code___When_parameter_item_is_a_null_Nullable_DateTime_dictionary()
+        public static void Hash___Should_return_same_nonzero_hash_code___When_parameter_item_is_a_null_Nullable_DateTime()
         {
             // Arrange
             DateTime? values1 = null;
             DateTime? values2 = null;
+
+            // Act
+            var actual1 = HashCodeHelper.Initialize().Hash(values1).Value;
+            var actual2 = HashCodeHelper.Initialize().Hash(values2).Value;
+
+            // Assert
+            actual1.Should().NotBe(0);
+            actual1.Should().Be(actual2);
+        }
+
+        [Fact]
+        public static void Hash___Should_return_same_nonzero_hash_code___When_parameter_item_is_a_null_Nullable_Color()
+        {
+            // Arrange
+            Color? values1 = null;
+            Color? values2 = null;
 
             // Act
             var actual1 = HashCodeHelper.Initialize().Hash(values1).Value;
@@ -1021,6 +1038,98 @@ namespace OBeautifulCode.Equality.Recipes.Test
             actual2.Should().Be(expected2);
             actual3.Should().Be(expected3);
             actual4.Should().Be(expected4);
+        }
+
+        [Fact]
+        public static void Hash___Should_return_different_hash_codes___When_the_items_are_Color_objects_that_are_not_equal()
+        {
+            // Arrange
+            var item1 = Color.FromArgb(255, 255, 218, 185);
+            var item2 = Color.FromArgb(254, 255, 218, 185);
+            var item3 = Color.FromArgb(255, 254, 218, 185);
+            var item4 = Color.FromArgb(255, 255, 219, 185);
+            var item5 = Color.FromArgb(255, 255, 218, 184);
+
+            // Act
+            var actual1 = HashCodeHelper.Initialize().Hash(item1).Value;
+            var actual2 = HashCodeHelper.Initialize().Hash(item2).Value;
+            var actual3 = HashCodeHelper.Initialize().Hash(item3).Value;
+            var actual4 = HashCodeHelper.Initialize().Hash(item4).Value;
+            var actual5 = HashCodeHelper.Initialize().Hash(item5).Value;
+
+            // Assert
+            actual1.Should().NotBe(actual2);
+            actual1.Should().NotBe(actual3);
+            actual1.Should().NotBe(actual4);
+            actual1.Should().NotBe(actual5);
+            actual2.Should().NotBe(actual3);
+            actual2.Should().NotBe(actual4);
+            actual2.Should().NotBe(actual5);
+            actual3.Should().NotBe(actual4);
+            actual3.Should().NotBe(actual5);
+            actual4.Should().NotBe(actual5);
+        }
+
+        [Fact]
+        public static void Hash___Should_return_the_same_hash_code___When_the_items_are_Color_objects_that_are_equal()
+        {
+            // Arrange
+            var item1 = Color.FromArgb(255, 218, 185);
+            var item2 = Color.PeachPuff;
+
+            var expected = HashCodeHelper.Initialize().Hash(item1).Value;
+
+            // Act
+            var actual = HashCodeHelper.Initialize().Hash(item2).Value;
+
+            // Assert
+            actual.Should().Be(expected);
+        }
+
+        [Fact]
+        public static void Hash___Should_return_different_hash_codes___When_the_items_are_Nullable_Color_objects_that_are_not_equal()
+        {
+            // Arrange
+            Color? item1 = Color.FromArgb(255, 255, 218, 185);
+            Color? item2 = Color.FromArgb(254, 255, 218, 185);
+            Color? item3 = Color.FromArgb(255, 254, 218, 185);
+            Color? item4 = Color.FromArgb(255, 255, 219, 185);
+            Color? item5 = Color.FromArgb(255, 255, 218, 184);
+
+            // Act
+            var actual1 = HashCodeHelper.Initialize().Hash(item1).Value;
+            var actual2 = HashCodeHelper.Initialize().Hash(item2).Value;
+            var actual3 = HashCodeHelper.Initialize().Hash(item3).Value;
+            var actual4 = HashCodeHelper.Initialize().Hash(item4).Value;
+            var actual5 = HashCodeHelper.Initialize().Hash(item5).Value;
+
+            // Assert
+            actual1.Should().NotBe(actual2);
+            actual1.Should().NotBe(actual3);
+            actual1.Should().NotBe(actual4);
+            actual1.Should().NotBe(actual5);
+            actual2.Should().NotBe(actual3);
+            actual2.Should().NotBe(actual4);
+            actual2.Should().NotBe(actual5);
+            actual3.Should().NotBe(actual4);
+            actual3.Should().NotBe(actual5);
+            actual4.Should().NotBe(actual5);
+        }
+
+        [Fact]
+        public static void Hash___Should_return_the_same_hash_code___When_the_items_are_Nullable_Color_objects_that_are_equal()
+        {
+            // Arrange
+            Color? item1 = Color.FromArgb(255, 218, 185);
+            Color? item2 = Color.PeachPuff;
+
+            var expected = HashCodeHelper.Initialize().Hash(item1).Value;
+
+            // Act
+            var actual = HashCodeHelper.Initialize().Hash(item2).Value;
+
+            // Assert
+            actual.Should().Be(expected);
         }
 
         [Fact]

@@ -9,12 +9,16 @@
       <dependency id="OBeautifulCode.Type.Recipes.TypeExtensions" version="1.0.80" />
       <dependency id="OBeautifulCode.CodeAnalysis.Recipes.SuppressBecause" version="1.0.15" />
     </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Drawing"  />
+    </frameworkAssemblies>
   </metadata>
   <files>
     <file src="EqualityComparerHelper.cs" target="content\net462\.recipes\OBeautifulCode.Equality\EqualityComparerHelper.cs" />
     <file src="EqualityExtensions.cs" target="content\net462\.recipes\OBeautifulCode.Equality\EqualityExtensions.cs" />
     <file src="HashCodeHelper.cs" target="content\net462\.recipes\OBeautifulCode.Equality\HashCodeHelper.cs" />
     <file src="EqualityComparers\ByteArrayEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\ByteArrayEqualityComparer.cs" />
+    <file src="EqualityComparers\ColorEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\ColorEqualityComparer.cs" />
     <file src="EqualityComparers\DateTimeEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\DateTimeEqualityComparer.cs" />
     <file src="EqualityComparers\DictionaryEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\DictionaryEqualityComparer.cs" />
     <file src="EqualityComparers\EnumerableEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\EnumerableEqualityComparer.cs" />
@@ -22,6 +26,7 @@
     <file src="EqualityComparers\LambdaBackedEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\LambdaBackedEqualityComparer.cs" />
     <file src="EqualityComparers\ObjectEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\ObjectEqualityComparer.cs" />
     <file src="EqualityComparers\NativeMethods.cs" target="content\net462\.recipes\OBeautifulCode.Equality\NativeMethods.cs" />
+    <file src="EqualityComparers\NullableColorEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\NullableColorEqualityComparer.cs" />
     <file src="EqualityComparers\NullableDateTimeEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\NullableDateTimeEqualityComparer.cs" />
     <file src="EqualityComparers\ReadOnlyDictionaryEqualityComparer.cs" target="content\net462\.recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
     <file src="EqualityComparers\ReferenceEqualityComparer{T}.cs" target="content\net462\.recipes\OBeautifulCode.Equality\ReferenceEqualityComparer{T}.cs" />

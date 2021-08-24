@@ -9,6 +9,7 @@ namespace OBeautifulCode.Equality.Recipes.Test
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Drawing;
     using System.Linq;
 
     using FakeItEasy;
@@ -904,6 +905,138 @@ namespace OBeautifulCode.Equality.Recipes.Test
             actual1.Should().BeTrue();
             actual2.Should().BeTrue();
             actual3.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_false___When_two_Color_objects_are_not_equal()
+        {
+            // Arrange
+            var item1 = Color.FromArgb(255, 255, 218, 185);
+            var item2 = Color.FromArgb(254, 255, 218, 185);
+            var item3 = Color.FromArgb(255, 254, 218, 185);
+            var item4 = Color.FromArgb(255, 255, 219, 185);
+            var item5 = Color.FromArgb(255, 255, 218, 184);
+
+            // Act
+            var actual1 = item1.IsEqualTo(item2);
+            var actual2 = item1.IsEqualTo(item3);
+            var actual3 = item1.IsEqualTo(item4);
+            var actual4 = item1.IsEqualTo(item5);
+            var actual5 = item2.IsEqualTo(item3);
+            var actual6 = item2.IsEqualTo(item4);
+            var actual7 = item2.IsEqualTo(item5);
+            var actual8 = item3.IsEqualTo(item4);
+            var actual9 = item3.IsEqualTo(item5);
+            var actual10 = item4.IsEqualTo(item5);
+
+            // Assert
+            // first assert that these are considered not equal by .NET
+            item1.Should().NotBe(item2);
+            item1.Should().NotBe(item3);
+            item1.Should().NotBe(item4);
+            item1.Should().NotBe(item5);
+            item2.Should().NotBe(item3);
+            item2.Should().NotBe(item4);
+            item2.Should().NotBe(item5);
+            item3.Should().NotBe(item4);
+            item3.Should().NotBe(item5);
+            item4.Should().NotBe(item5);
+
+            // now assert that our methods considers them NOT equal
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+            actual3.Should().BeFalse();
+            actual4.Should().BeFalse();
+            actual5.Should().BeFalse();
+            actual6.Should().BeFalse();
+            actual7.Should().BeFalse();
+            actual8.Should().BeFalse();
+            actual9.Should().BeFalse();
+            actual10.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_two_Color_objects_are_equal()
+        {
+            // Arrange
+            var item1 = Color.FromArgb(255, 218, 185);
+            var item2 = Color.PeachPuff;
+
+            // Act
+            var actual = item1.IsEqualTo(item2);
+
+            // Assert
+            // first assert that these are considered not equal by .NET
+            item1.Should().NotBe(item2);
+
+            // now assert that our methods considers them equal
+            actual.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_false___When_two_Nullable_Color_objects_are_not_equal()
+        {
+            // Arrange
+            Color? item1 = Color.FromArgb(255, 255, 218, 185);
+            Color? item2 = Color.FromArgb(254, 255, 218, 185);
+            Color? item3 = Color.FromArgb(255, 254, 218, 185);
+            Color? item4 = Color.FromArgb(255, 255, 219, 185);
+            Color? item5 = Color.FromArgb(255, 255, 218, 184);
+
+            // Act
+            var actual1 = item1.IsEqualTo(item2);
+            var actual2 = item1.IsEqualTo(item3);
+            var actual3 = item1.IsEqualTo(item4);
+            var actual4 = item1.IsEqualTo(item5);
+            var actual5 = item2.IsEqualTo(item3);
+            var actual6 = item2.IsEqualTo(item4);
+            var actual7 = item2.IsEqualTo(item5);
+            var actual8 = item3.IsEqualTo(item4);
+            var actual9 = item3.IsEqualTo(item5);
+            var actual10 = item4.IsEqualTo(item5);
+
+            // Assert
+            // first assert that these are considered not equal by .NET
+            item1.Should().NotBe(item2);
+            item1.Should().NotBe(item3);
+            item1.Should().NotBe(item4);
+            item1.Should().NotBe(item5);
+            item2.Should().NotBe(item3);
+            item2.Should().NotBe(item4);
+            item2.Should().NotBe(item5);
+            item3.Should().NotBe(item4);
+            item3.Should().NotBe(item5);
+            item4.Should().NotBe(item5);
+
+            // now assert that our methods considers them NOT equal
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+            actual3.Should().BeFalse();
+            actual4.Should().BeFalse();
+            actual5.Should().BeFalse();
+            actual6.Should().BeFalse();
+            actual7.Should().BeFalse();
+            actual8.Should().BeFalse();
+            actual9.Should().BeFalse();
+            actual10.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsEqualTo___Should_return_true___When_two_Nullable_Color_objects_are_equal()
+        {
+            // Arrange
+            Color? item1 = Color.FromArgb(255, 218, 185);
+            Color? item2 = Color.PeachPuff;
+
+            // Act
+            var actual = item1.IsEqualTo(item2);
+
+            // Assert
+            // first assert that these are considered not equal by .NET
+            item1.Should().NotBe(item2);
+
+            // now assert that our methods considers them equal
+            actual.Should().BeTrue();
         }
 
         [Fact]
@@ -1923,6 +2056,82 @@ namespace OBeautifulCode.Equality.Recipes.Test
                 {
                     "whatever3",
                     dateTime3
+                },
+            };
+
+            // Act
+            var actual = item1.IsDictionaryEqualTo(item2);
+
+            // Assert
+            actual.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsDictionaryEqualTo___Should_return_false___When_dictionaries_contain_two_Color_values_that_are_not_equal()
+        {
+            // Arrange
+            var color1 = Color.FromArgb(255, 218, 185);
+            var color2 = Color.FromArgb(255, 218, 184);
+
+            IDictionary<string, Color> item1 = new Dictionary<string, Color>()
+            {
+                {
+                    "whatever1",
+                    color1
+                },
+                {
+                    "whatever2",
+                    color1
+                },
+            };
+
+            IDictionary<string, Color> item2 = new Dictionary<string, Color>()
+            {
+                {
+                    "whatever1",
+                    color1
+                },
+                {
+                    "whatever2",
+                    color2
+                },
+            };
+
+            // Act
+            var actual1 = item1.IsDictionaryEqualTo(item2);
+
+            // Assert
+            actual1.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsDictionaryEqualTo___Should_return_true___When_dictionaries_contain_two_Color_values_that_are_equal()
+        {
+            // Arrange
+            var color1 = Color.FromArgb(255, 218, 185);
+            var color2 = Color.PeachPuff;
+
+            IDictionary<string, Color> item1 = new Dictionary<string, Color>()
+            {
+                {
+                    "whatever1",
+                    color1
+                },
+                {
+                    "whatever2",
+                    color2
+                },
+            };
+
+            IDictionary<string, Color> item2 = new Dictionary<string, Color>()
+            {
+                {
+                    "whatever1",
+                    color2
+                },
+                {
+                    "whatever2",
+                    color1
                 },
             };
 
@@ -2961,6 +3170,82 @@ namespace OBeautifulCode.Equality.Recipes.Test
         }
 
         [Fact]
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_false___When_dictionaries_contain_two_Color_values_that_are_not_equal()
+        {
+            // Arrange
+            var color1 = Color.FromArgb(255, 218, 185);
+            var color2 = Color.FromArgb(255, 217, 185);
+
+            IReadOnlyDictionary<string, Color> item1 = new Dictionary<string, Color>()
+            {
+                {
+                    "whatever1",
+                    color1
+                },
+                {
+                    "whatever2",
+                    color1
+                },
+            };
+
+            IReadOnlyDictionary<string, Color> item2 = new Dictionary<string, Color>()
+            {
+                {
+                    "whatever1",
+                    color1
+                },
+                {
+                    "whatever2",
+                    color2
+                },
+            };
+
+            // Act
+            var actual1 = item1.IsReadOnlyDictionaryEqualTo(item2);
+
+            // Assert
+            actual1.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsReadOnlyDictionaryEqualTo___Should_return_true___When_dictionaries_contain_two_Color_values_that_are_equal()
+        {
+            // Arrange
+            var color1 = Color.FromArgb(255, 218, 185);
+            var color2 = Color.PeachPuff;
+
+            IReadOnlyDictionary<string, Color> item1 = new Dictionary<string, Color>()
+            {
+                {
+                    "whatever1",
+                    color1
+                },
+                {
+                    "whatever2",
+                    color2
+                },
+            };
+
+            IReadOnlyDictionary<string, Color> item2 = new Dictionary<string, Color>()
+            {
+                {
+                    "whatever1",
+                    color2
+                },
+                {
+                    "whatever2",
+                    color1
+                },
+            };
+
+            // Act
+            var actual = item1.IsReadOnlyDictionaryEqualTo(item2);
+
+            // Assert
+            actual.Should().BeTrue();
+        }
+
+        [Fact]
         public static void IsSequenceEqualTo___Should_return_true___When_both_sequences_are_null()
         {
             // Arrange, Act
@@ -3371,6 +3656,60 @@ namespace OBeautifulCode.Equality.Recipes.Test
                 utcDateTime,
                 localDateTime,
                 unspecifiedDateTime,
+            };
+
+            // Act
+            var actual = item1.IsSequenceEqualTo(item2);
+
+            // Assert
+            actual.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsSequenceEqualTo___Should_return_false___When_sets_contain_different_Color_values()
+        {
+            // Arrange
+            var color1 = Color.FromArgb(255, 255, 218, 185);
+            var color2 = Color.FromArgb(123, 255, 218, 184);
+
+            var item1 = new List<Color>
+            {
+                color1,
+                color2,
+            };
+
+            var item2 = new List<Color>
+            {
+                color2,
+                color1,
+            };
+
+            // Act
+            var actual = item1.IsSequenceEqualTo(item2);
+
+            // Assert
+            actual.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsSequenceEqualTo___Should_return_true___When_sets_contain_the_same_Color_values()
+        {
+            // Arrange
+            var color1 = Color.FromArgb(255, 218, 185);
+            var color2 = Color.PeachPuff;
+
+            var item1 = new List<Color>
+            {
+                Color.AliceBlue,
+                color1,
+                Color.DarkBlue,
+            };
+
+            var item2 = new List<Color>
+            {
+                Color.AliceBlue,
+                color2,
+                Color.DarkBlue,
             };
 
             // Act
@@ -3914,6 +4253,60 @@ namespace OBeautifulCode.Equality.Recipes.Test
                 localDateTime,
                 unspecifiedDateTime,
                 utcDateTime,
+            };
+
+            // Act
+            var actual = item1.IsUnorderedEqualTo(item2);
+
+            // Assert
+            actual.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsUnorderedEqualTo___Should_return_false___When_sets_contain_different_Color_values()
+        {
+            // Arrange
+            var color1 = Color.FromArgb(253, 218, 185);
+            var color2 = Color.FromArgb(255, 218, 184);
+
+            var item1 = new List<Color>
+            {
+                color1,
+                color1,
+            };
+
+            var item2 = new List<Color>
+            {
+                color1,
+                color2,
+            };
+
+            // Act
+            var actual = item1.IsUnorderedEqualTo(item2);
+
+            // Assert
+            actual.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsUnorderedEqualTo___Should_return_false___When_sets_contain_the_same_Color_values()
+        {
+            // Arrange
+            var color1 = Color.FromArgb(255, 218, 185);
+            var color2 = Color.PeachPuff;
+
+            var item1 = new List<Color>
+            {
+                Color.AliceBlue,
+                Color.DarkBlue,
+                color1,
+            };
+
+            var item2 = new List<Color>
+            {
+                Color.DarkBlue,
+                color2,
+                Color.AliceBlue,
             };
 
             // Act

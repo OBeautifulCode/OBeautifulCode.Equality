@@ -41,6 +41,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include=".recipes\OBeautifulCode.CodeAnalysis\ObcSuppressBecause.cs" />
@@ -49,6 +50,8 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="EqualityComparerHelper.cs" />
+    <Compile Include="EqualityComparers\ColorEqualityComparer.cs" />
+    <Compile Include="EqualityComparers\NullableColorEqualityComparer.cs" />
     <Compile Include="EqualityComparers\NullableDateTimeEqualityComparer.cs" />
     <Compile Include="EqualityComparers\ReferenceEqualityComparer{T}.cs" />
     <Compile Include="EqualityComparers\ObjectEqualityComparer.cs" />

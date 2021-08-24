@@ -59,6 +59,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -108,6 +109,8 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="EqualityComparers\ByteArrayEqualityComparerTest.cs" />
+    <Compile Include="EqualityComparers\ColorEqualityComparerTest.cs" />
+    <Compile Include="EqualityComparers\NullableColorEqualityComparerTest.cs" />
     <Compile Include="EqualityComparers\ReferenceEqualityComparerTest.cs" />
     <Compile Include="EqualityComparers\ObjectEqualityComparerTest.cs" />
     <Compile Include="EqualityComparers\NullableDateTimeEqualityComparerTest.cs" />
